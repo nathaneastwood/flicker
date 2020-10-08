@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.tar.gz
+*\.Rcheck
+build_docs.sh
+CRAN-RELEASE
+cran-comments.md
+*.Rproj
+README.html
+.vscode/
+sparkplugs.code-workspace
+docs
+inst/doc
