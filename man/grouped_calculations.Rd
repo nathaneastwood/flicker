@@ -6,12 +6,12 @@
 \alias{summarise_groups}
 \title{Grouped Calculations}
 \usage{
-mutate_groups(x, groups, calculations)
+mutate_groups(.data, groups, calculations)
 
-summarise_groups(x, groups, calculations)
+summarise_groups(.data, groups, calculations)
 }
 \arguments{
-\item{x}{A Spark \code{DataFrame} or a \code{data.frame}. The data to mutate or summarise.}
+\item{.data}{A Spark \code{DataFrame} or a \code{data.frame}. The data to mutate or summarise.}
 
 \item{groups}{\code{character(n)}. The columns to group by.}
 
@@ -19,15 +19,19 @@ summarise_groups(x, groups, calculations)
 is the name of the new column to create and the RHS is the calculation to apply.}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{x}.
+A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
 \itemize{
-\item \code{mutate_groups()}: Group the data, \code{x}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then apply \code{calculations} using
+\item \code{mutate_groups()}: Group the data, \code{.data}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then apply \code{calculations} using
 \code{\link[dplyr:mutate]{dplyr::mutate()}}.
-\item \code{summarise_groups()}: Group the data, \code{x}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then summarise it by applying a
+\item \code{summarise_groups()}: Group the data, \code{.data}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then summarise it by applying a
 \code{calculations} using \code{\link[dplyr:summarise]{dplyr::summarise()}}.
 }
+}
+\details{
+These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
+each expression to evaluate.
 }
 \examples{
 mtcars \%>\%

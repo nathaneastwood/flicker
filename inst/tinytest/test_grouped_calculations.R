@@ -42,6 +42,8 @@ expect_equal(
   info = "Ensure the mean is calculated per group"
 )
 
+# -- Spark ---------------------------------------------------------------------
+
 invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
 mtcars <- dplyr::copy_to(sc, mtcars, "mtcars")
 
