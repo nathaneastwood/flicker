@@ -4,7 +4,7 @@
 \name{sparkplugs}
 \alias{sparkplugs}
 \alias{sparkplugs-package}
-\title{sparkplugs: Common Wrappers And Missing Functionality From 'sparklyr'}
+\title{sparkplugs: Common Wrappers And Missing Functionality From 'sparklyr' And 'dplyr'}
 \description{
 Plugging the gaps of 'sparklyr'.
 }
