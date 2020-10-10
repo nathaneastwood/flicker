@@ -90,12 +90,14 @@
 <ul>
 <li>the development version from <a href="https://github.com/nathaneastwood/sparkplugs">GitHub</a> with</li>
 </ul>
-<!-- --><div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("remotes")</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"nathaneastwood/sparkplugs"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nathaneastwood/sparkplugs"</span><span class="op">)</span></pre></div>
 <ul>
 <li>the latest release from CRAN with</li>
 </ul>
-<!-- --><div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">install.packages</span>(<span class="st">"sparkplugs"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sparkplugs"</span><span class="op">)</span></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -104,68 +106,71 @@
 <h3 class="hasAnchor">
 <a href="#grouped-operations" class="anchor"></a>Grouped Operations</h3>
 <p>These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for each expression to evaluate.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(sparkplugs)</span>
-<span id="cb3-2"><a href="#cb3-2"></a>mtcars <span class="op">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="st">  </span><span class="kw">summarise_groups</span>(</span>
-<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">groups =</span> <span class="kw">c</span>(<span class="st">"am"</span>, <span class="st">"cyl"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    <span class="dt">calculations =</span> <span class="kw">list</span>(</span>
-<span id="cb3-6"><a href="#cb3-6"></a>      avgMpg <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(mpg, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb3-7"><a href="#cb3-7"></a>      avgDisp <span class="op">~</span><span class="st"> </span><span class="kw">mean</span>(disp, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    )</span>
-<span id="cb3-9"><a href="#cb3-9"></a>  )</span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co"># # A tibble: 6 x 4</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co">#      am   cyl avgMpg avgDisp</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="co">#   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a><span class="co"># 1     0     4   22.9   136. </span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># 2     0     6   19.1   205. </span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="co"># 3     0     8   15.0   358. </span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co"># 4     1     4   28.1    93.6</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># 5     1     6   20.6   155  </span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># 6     1     8   15.4   326</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nathaneastwood/sparkplugs">sparkplugs</a></span><span class="op">)</span>
+<span class="va">mtcars</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/grouped_calculations.html">summarise_groups</a></span><span class="op">(</span>
+    groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"cyl"</span><span class="op">)</span>,
+    calculations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+      <span class="va">avgMpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+      <span class="va">avgDisp</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">disp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+    <span class="op">)</span>
+  <span class="op">)</span>
+<span class="co"># # A tibble: 6 x 4</span>
+<span class="co">#      am   cyl avgMpg avgDisp</span>
+<span class="co">#   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;</span>
+<span class="co"># 1     0     4   22.9   136. </span>
+<span class="co"># 2     0     6   19.1   205. </span>
+<span class="co"># 3     0     8   15.0   358. </span>
+<span class="co"># 4     1     4   28.1    93.6</span>
+<span class="co"># 5     1     6   20.6   155  </span>
+<span class="co"># 6     1     8   15.4   326</span></pre></div>
 </div>
 <div id="scoped-variant-when" class="section level3">
 <h3 class="hasAnchor">
 <a href="#scoped-variant-when" class="anchor"></a>Scoped Variant “when”</h3>
 <p>These functions are subtly different from the scoped <code>_if()</code> variants of {dplyr} functions in that they can evaluate any predicate. They are useful when used within a chain of commands.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_when</span>(<span class="st">"cyl"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">colnames</span>(mtcars) <span class="op">~</span><span class="st"> </span>cyl <span class="op">==</span><span class="st"> </span><span class="dv">4</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co"># Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co"># Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co"># Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co"># Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/when.html">filter_when</a></span><span class="op">(</span><span class="st">"cyl"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class="co"># Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class="co"># Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class="co"># Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class="co"># Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class="co"># Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class="co"># Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class="co"># Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class="co"># Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class="co"># Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class="co"># Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class="co"># Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></pre></div>
 </div>
 <div id="union-select" class="section level3">
 <h3 class="hasAnchor">
 <a href="#union-select" class="anchor"></a>Union Select</h3>
 <p>This function will union the records from multiple data sets returning only the requested columns.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>a &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">col1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">col2 =</span> <span class="dv">6</span>, <span class="dt">col3 =</span> <span class="kw">rnorm</span>(<span class="dv">5</span>))</span>
-<span id="cb5-2"><a href="#cb5-2"></a>b &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">col1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">col2 =</span> <span class="dv">4</span>, <span class="dt">col3 =</span> <span class="kw">rnorm</span>(<span class="dv">3</span>))</span>
-<span id="cb5-3"><a href="#cb5-3"></a>c &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">col1 =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>), <span class="dt">col3 =</span> <span class="kw">rnorm</span>(<span class="dv">7</span>))</span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="kw">union_select</span>(<span class="dt">data =</span> <span class="kw">list</span>(a, b, c), <span class="dt">cols =</span> <span class="kw">c</span>(<span class="st">"col1"</span>, <span class="st">"col3"</span>))</span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#    col1        col3</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># 1     1  0.71970261</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># 2     2  0.05896165</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co"># 3     3 -1.86145556</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># 4     4 -1.55525455</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># 5     5  0.40023705</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># 6     1  0.46236135</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="co"># 7     2  1.13386688</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a><span class="co"># 8     3 -0.30470752</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a><span class="co"># 9     0  0.33385790</span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="co"># 10    1 -0.09675900</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co"># 11    1 -1.24162971</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># 12    2 -0.33568849</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co"># 13    3  0.78080678</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co"># 14    5 -0.28526555</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co"># 15    8 -2.37950988</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, col2 <span class="op">=</span> <span class="fl">6</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, col2 <span class="op">=</span> <span class="fl">4</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">8</span><span class="op">)</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/union_select.html">union_select</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col1"</span>, <span class="st">"col3"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#    col1        col3</span>
+<span class="co"># 1     1 -0.13760614</span>
+<span class="co"># 2     2  2.73555040</span>
+<span class="co"># 3     3  0.07395597</span>
+<span class="co"># 4     4 -1.44511363</span>
+<span class="co"># 5     5 -0.69906643</span>
+<span class="co"># 6     1  0.07594518</span>
+<span class="co"># 7     2  1.49479365</span>
+<span class="co"># 8     3  0.41553823</span>
+<span class="co"># 9     0 -0.51704269</span>
+<span class="co"># 10    1  0.24766451</span>
+<span class="co"># 11    1 -0.04042063</span>
+<span class="co"># 12    2  0.03999176</span>
+<span class="co"># 13    3 -1.02395443</span>
+<span class="co"># 14    5  0.96759627</span>
+<span class="co"># 15    8  0.21690870</span></pre></div>
 </div>
 </div>
 </div>
