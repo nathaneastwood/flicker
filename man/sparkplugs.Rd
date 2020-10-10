@@ -4,8 +4,10 @@
 \name{sparkplugs}
 \alias{sparkplugs}
 \alias{sparkplugs-package}
-\title{sparkplugs: Common Wrappers And Missing Functionality From 'sparklyr' And 'dplyr'}
+\title{sparkplugs: Common Wrappers and Missing Functionality from 'sparklyr' and 'dplyr'}
 \description{
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
 Plugging the gaps of 'sparklyr'.
 }
 \seealso{

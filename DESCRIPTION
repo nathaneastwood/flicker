@@ -1,7 +1,7 @@
 Package: sparkplugs
 Type: Package
-Title: Common Wrappers And Missing Functionality From 'sparklyr' And 'dplyr'
-Version: 0.0.9003
+Title: Common Wrappers and Missing Functionality from 'sparklyr' and 'dplyr'
+Version: 0.0.9004
 Authors@R: person("Nathan", "Eastwood", "", "nathan.eastwood@icloud.com",
     role = c("aut", "cre"))
 Maintainer: Nathan Eastwood <nathan.eastwood@icloud.com>
@@ -24,4 +24,3 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-VignetteBuilder: knitr

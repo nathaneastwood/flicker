@@ -16,7 +16,10 @@
 ^ci$
 ^\.vscode$
 ^\.Rhistory$
-poorman.code-workspace
+sparkplugs.code-workspace
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^\./inst/logo$
+^derby\.log$
+^logs$

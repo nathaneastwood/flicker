@@ -1,0 +1,79 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# {sparkplugs} <a href='https://nathaneastwood.github.io/sparkplugs/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+
+[![CRAN status](https://www.r-pkg.org/badges/version/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
+[![Dependencies](https://tinyverse.netlify.com/badge/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs)
+
+## Overview
+
+{sparkplugs} is a collection of useful wrapper functions and extensions to the {dplyr} API which also work with Spark.
+
+## Installation
+
+You can install:
+
+* the development version from [GitHub](https://github.com/nathaneastwood/sparkplugs) with
+
+```{r installation, eval = FALSE}
+# install.packages("remotes")
+remotes::install_github("nathaneastwood/sparkplugs")
+```
+
+* the latest release from CRAN with
+
+```{r cran, eval = FALSE}
+install.packages("sparkplugs")
+```
+
+## Usage
+
+### Grouped Operations
+
+These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for each expression to evaluate.
+
+```{r grouped}
+library(sparkplugs)
+mtcars %>%
+  summarise_groups(
+    groups = c("am", "cyl"),
+    calculations = list(
+      avgMpg ~ mean(mpg, na.rm = TRUE),
+      avgDisp ~ mean(disp, na.rm = TRUE)
+    )
+  )
+```
+
+### Scoped Variant "when"
+
+These functions are subtly different from the scoped `_if()` variants of {dplyr} functions in that they can evaluate any predicate. They are useful when used within a chain of commands.
+
+```{r when}
+mtcars %>% filter_when("cyl" %in% colnames(mtcars) ~ cyl == 4)
+```
+
+### Union Select
+
+This function will union the records from multiple data sets returning only the requested columns.
+
+```{r union_select}
+a <- data.frame(col1 = 1:5, col2 = 6, col3 = rnorm(5))
+b <- data.frame(col1 = 1:3, col2 = 4, col3 = rnorm(3))
+c <- data.frame(col1 = c(0, 1, 1, 2, 3, 5, 8), col3 = rnorm(7))
+
+union_select(data = list(a, b, c), cols = c("col1", "col3"))
+```
