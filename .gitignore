@@ -13,3 +13,5 @@ README.html
 sparkplugs.code-workspace
 docs
 inst/doc
+logs/
+derby.log
