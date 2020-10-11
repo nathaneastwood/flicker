@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
 [![Dependencies](https://tinyverse.netlify.com/badge/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
 ![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs)
+![check_cran](https://github.com/nathaneastwood/sparkplugs/workflows/check_cran/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/nathaneastwood/sparkplugs/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/sparkplugs)
 
 ## Overview
 
