@@ -42,6 +42,18 @@ expect_equal(
   info = "Ensure the mean is calculated per group"
 )
 
+expect_equal(
+  sparkplugs:::parse_formulas(x ~ y),
+  list(x = str2lang("y")),
+  info = "calculations don't need to be passed as a list"
+)
+
+expect_equal(
+  sparkplugs:::parse_formulas(~ y),
+  list(y = str2lang("y")),
+  info = "Unnamed formulas will be named"
+)
+
 # -- Spark ---------------------------------------------------------------------
 
 if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {

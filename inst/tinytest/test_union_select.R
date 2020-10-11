@@ -18,6 +18,27 @@ expect_equal(
   info = "Duplicate records are dropped when `all = FALSE`"
 )
 
+expect_equal(
+  union_select(list(mtcars)),
+  mtcars,
+  info = "Passing a single df returns the same df"
+)
+
+expect_error(
+  union_select(mtcars),
+  info = "`data` should be provided as a `list(n)`"
+)
+
+expect_error(
+  union_select(list(mtcars), all = 1),
+  info = "`all` should be a `logical(1)` vector"
+)
+
+expect_error(
+  union_select(list(mtcars), cols = 1),
+  info = "`cols` should be a `character(n)` vector"
+)
+
 # -- Spark ---------------------------------------------------------------------
 
 if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
