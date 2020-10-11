@@ -1,0 +1,23 @@
+home:
+  strip_header: true
+
+reference:
+- title: Grouped Operations
+  contents:
+  - mutate_groups
+  - summarise_groups
+
+- title: Scoped Variant "when"
+  contents:
+  - arrange_when
+  - distinct_when
+  - filter_when
+  - group_by_when
+  - mutate_when
+  - select_when
+  - summarise_when
+  - transmute_when
+
+- title: Union Select
+  contents:
+  - union_select
