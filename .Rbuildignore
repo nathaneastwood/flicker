@@ -23,3 +23,4 @@ sparkplugs.code-workspace
 ^\./inst/logo$
 ^derby\.log$
 ^logs$
+^\.Renviron$

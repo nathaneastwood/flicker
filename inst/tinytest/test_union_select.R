@@ -20,26 +20,27 @@ expect_equal(
 
 # -- Spark ---------------------------------------------------------------------
 
-invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
-df <- dplyr::copy_to(sc, df, "df")
+if (Sys.getenv("NOT_CRAN") == "true") {
+  invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
+  df <- dplyr::copy_to(sc, df, "df")
 
-expect_equal(
-  union_select(list(df, df, df)) %>% sparklyr::sdf_dim(),
-  c(3, 3),
-  info = "Multiple data.frames can be joined together in Spark"
-)
+  expect_equal(
+    union_select(list(df, df, df)) %>% sparklyr::sdf_dim(),
+    c(3, 3),
+    info = "Multiple data.frames can be joined together in Spark"
+  )
 
-expect_equal(
-  union_select(list(df, df, df), cols = c("a", "c")) %>% sparklyr::sdf_dim(),
-  c(3, 2),
-  info = "The user can select specific columns in Spark"
-)
+  expect_equal(
+    union_select(list(df, df, df), cols = c("a", "c")) %>% sparklyr::sdf_dim(),
+    c(3, 2),
+    info = "The user can select specific columns in Spark"
+  )
 
-expect_equal(
-  union_select(list(df, df, df), all = FALSE) %>% sparklyr::sdf_dim(),
-  c(1, 3),
-  info = "Duplicate records are dropped when `all = FALSE` in Spark"
-)
+  expect_equal(
+    union_select(list(df, df, df), all = FALSE) %>% sparklyr::sdf_dim(),
+    c(1, 3),
+    info = "Duplicate records are dropped when `all = FALSE` in Spark"
+  )
 
-
-sparklyr::spark_disconnect_all()
+  sparklyr::spark_disconnect_all()
+}

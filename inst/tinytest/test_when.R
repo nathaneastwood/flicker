@@ -67,25 +67,27 @@ expect_equal(
 
 # -- Spark ---------------------------------------------------------------------
 
-invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
-mtcars <- dplyr::copy_to(sc, mtcars, "mtcars")
+if (Sys.getenv("NOT_CRAN") == "true") {
+  invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
+  mtcars <- dplyr::copy_to(sc, mtcars, "mtcars")
 
-expect_equal(
-  mtcars %>% filter_when("cyl" %in% colnames(mtcars) ~ cyl == 4) %>% sparklyr::sdf_nrow(),
-  11L,
-  info = "Filters work for Spark"
-)
+  expect_equal(
+    mtcars %>% filter_when("cyl" %in% colnames(mtcars) ~ cyl == 4) %>% sparklyr::sdf_nrow(),
+    11L,
+    info = "Filters work for Spark"
+  )
 
-expect_equal(
-  mtcars %>% mutate_when("cyl" %in% colnames(mtcars) ~ mpg * 2) %>% colnames(),
-  c("mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb", "mpg * 2"),
-  info = "Unnamed expressions work for Spark"
-)
+  expect_equal(
+    mtcars %>% mutate_when("cyl" %in% colnames(mtcars) ~ mpg * 2) %>% colnames(),
+    c("mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb", "mpg * 2"),
+    info = "Unnamed expressions work for Spark"
+  )
 
-expect_equal(
-  mtcars %>% select_when("cyl" %in% colnames(mtcars) ~ c(Cylinders = cyl, everything())) %>% colnames(),
-  c("Cylinders", "mpg", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb"),
-  info = "Additional arguments are passed to .fn"
-)
+  expect_equal(
+    mtcars %>% select_when("cyl" %in% colnames(mtcars) ~ c(Cylinders = cyl, everything())) %>% colnames(),
+    c("Cylinders", "mpg", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb"),
+    info = "Additional arguments are passed to .fn"
+  )
 
-sparklyr::spark_disconnect_all()
+  sparklyr::spark_disconnect_all()
+}

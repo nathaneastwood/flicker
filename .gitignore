@@ -15,3 +15,4 @@ docs
 inst/doc
 logs/
 derby.log
+.Renviron
