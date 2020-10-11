@@ -43,6 +43,12 @@ expect_equal(
 )
 
 expect_equal(
+  mtcars %>% summarise_when("cyl" %in% colnames(mtcars) ~ mean(mpg)),
+  data.frame("mean(mpg)" = mean(mtcars$mpg), check.names = FALSE),
+  info = "summarise expressions are evaluated"
+)
+
+expect_equal(
   mtcars %>% transmute_when("cyl" %in% colnames(mtcars) ~ mpg * 2),
   {
     res <- mtcars
