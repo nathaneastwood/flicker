@@ -6,8 +6,9 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
 [![Dependencies](https://tinyverse.netlify.com/badge/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs)
-![check_cran](https://github.com/nathaneastwood/sparkplugs/workflows/check_cran/badge.svg?branch=master)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs) [![R
+build
+status](https://github.com/nathaneastwood/sparkplugs/workflows/R-CMD-check/badge.svg)](https://github.com/nathaneastwood/sparkplugs/actions?workflow=R-CMD-check)
 [![codecov](https://codecov.io/gh/nathaneastwood/sparkplugs/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/sparkplugs)
 
 Overview
@@ -97,20 +98,20 @@ b <- data.frame(col1 = 1:3, col2 = 4, col3 = rnorm(3))
 c <- data.frame(col1 = c(0, 1, 1, 2, 3, 5, 8), col3 = rnorm(7))
 
 union_select(data = list(a, b, c), cols = c("col1", "col3"))
-#    col1       col3
-# 1     1  0.7280926
-# 2     2 -0.7834109
-# 3     3  0.3272104
-# 4     4 -0.8584492
-# 5     5  0.2609203
-# 6     1 -0.8151429
-# 7     2 -0.6483321
-# 8     3 -1.3959451
-# 9     0  1.3350446
-# 10    1  0.7026112
-# 11    1 -0.6782799
-# 12    2 -1.4021924
-# 13    3 -3.2061002
-# 14    5  0.3701759
-# 15    8  0.9460641
+#    col1        col3
+# 1     1  0.58778836
+# 2     2  1.23825736
+# 3     3  0.02289007
+# 4     4 -0.67195010
+# 5     5 -0.06164566
+# 6     1 -0.90792429
+# 7     2 -0.44683004
+# 8     3  0.39220972
+# 9     0  1.06938197
+# 10    1  0.83547290
+# 11    1 -0.39781302
+# 12    2  2.37910188
+# 13    3  0.39475307
+# 14    5 -2.37216935
+# 15    8 -0.80268245
 ```
