@@ -20,7 +20,7 @@ expect_equal(
 
 # -- Spark ---------------------------------------------------------------------
 
-if (Sys.getenv("NOT_CRAN") == "true") {
+if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
   invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
   df <- dplyr::copy_to(sc, df, "df")
 
