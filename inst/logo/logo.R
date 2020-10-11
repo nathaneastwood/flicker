@@ -7,9 +7,9 @@ hexSticker::sticker(
   h_fill = "#ffffff",
   h_color = "#bd93f9",
   filename = "man/figures/logo.png",
-  url = "nathaneastwood/fpl",
+  url = "nathaneastwood/sparkplugs",
   u_color = "#bd93f9",
-  u_size = 2,
+  u_size = 1.5,
   dpi = 1200,
   asp = 0.9
 )
