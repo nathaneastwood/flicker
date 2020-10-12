@@ -8,7 +8,7 @@
 #' @param all `logical(1)`. Whether to keep duplicate records (def: `TRUE`) or not (`FALSE`).
 #'
 #' @return
-#' A Spark `DataFrame` or a `data.frame` depending on the input, `.data`.
+#' A Spark `DataFrame` or a `data.frame` depending on the input, `data`.
 #'
 #' @examples
 #' a <- data.frame(col1 = c(1:10, 10), col2 = 6)

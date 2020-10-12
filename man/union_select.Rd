@@ -14,7 +14,7 @@ union_select(data, cols = NULL, all = TRUE)
 \item{all}{\code{logical(1)}. Whether to keep duplicate records (def: \code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
+A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{data}.
 }
 \description{
 This function will union the records from multiple data sets returning only the requested columns (all of which are
