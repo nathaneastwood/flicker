@@ -45,7 +45,7 @@ cross_join <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_match
 #' @rdname cross_join
 #' @export
 cross_join.tbl_lazy <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_matches = c("never", "na")) {
-  dplyr::full_join(x = x, y = y, by = character(), copy = copy, suffix = suffix, ..., na_matches = na_matches)
+  dplyr::full_join(x = x, y = y, by = character(), copy = copy, suffix = suffix, ..., na_matches = na_matches) # nocov
 }
 
 #' @rdname cross_join
