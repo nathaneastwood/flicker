@@ -51,5 +51,20 @@ cross_join.tbl_lazy <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ...,
 #' @rdname cross_join
 #' @export
 cross_join.data.frame <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_matches = c("na", "never")) {
+  na_matches <- match.arg(na_matches, choices = c("na", "never"), several.ok = FALSE)
+  if (packageVersion("dplyr") < "1.0.0") { # nocov start
+    warning("`na_matches` only works for {dplyr} version '1.0.0' and above.")
+    common_cols <- intersect(colnames(x), colnames(y))
+
+    if (length(common_cols) > 0L) {
+      x <- dplyr::rename_at(x, common_cols, ~paste0(., suffix[1]))
+      y <- dplyr::rename_at(y, common_cols, ~paste0(., suffix[2]))
+    }
+
+    x <- dplyr::mutate(x, `_const` = TRUE)
+    y <- dplyr::mutate(y, `_const` = TRUE)
+    res <- dplyr::inner_join(x, y, by = "_const")
+    return(dplyr::select(res, -`_const`))
+  } # nocov end
   dplyr::full_join(x = x, y = y, by = character(), copy = copy, suffix = suffix, ..., na_matches = na_matches)
 }
