@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Common Wrappers and Missing Functionality from sparklyr and dplyr • sparkplugs</title>
+<title>Common Wrappers and Missing Functionality from sparklyr and dplyr • flicker</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -18,7 +18,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Common Wrappers and Missing Functionality from sparklyr and dplyr">
-<meta property="og:description" content="Plugging the gaps of sparklyr.">
+<meta property="og:description" content="flicker attempts to add convenience wrappers for common dplyr pipelines but also tries to ensure they
+    will work within a Spark context.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -37,8 +38,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">sparkplugs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <a class="navbar-link" href="index.html">flicker</a>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.4</span>
       </span>
     </div>
 
@@ -59,7 +60,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nathaneastwood/sparkplugs/">
+  <a href="https://github.com/nathaneastwood/flicker/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -76,29 +77,29 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="sparkplugs-" class="section level1">
+<div id="flicker-" class="section level1">
 
 
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>{sparkplugs} is a collection of useful wrapper functions and extensions to the {dplyr} API which also work with Spark.</p>
+<p>{flicker} is a collection of useful wrapper functions and extensions to the {dplyr} API which also work with Spark.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install:</p>
 <ul>
-<li>the development version from <a href="https://github.com/nathaneastwood/sparkplugs">GitHub</a> with</li>
+<li>the development version from <a href="https://github.com/nathaneastwood/flicker">GitHub</a> with</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nathaneastwood/sparkplugs"</span><span class="op">)</span></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nathaneastwood/flicker"</span><span class="op">)</span></pre></div>
 <ul>
 <li>the latest release from CRAN with</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"sparkplugs"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"flicker"</span><span class="op">)</span></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -108,14 +109,12 @@
 <a href="#grouped-operations" class="anchor"></a>Grouped Operations</h3>
 <p>These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for each expression to evaluate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nathaneastwood/sparkplugs">sparkplugs</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nathaneastwood/flicker">flicker</a></span><span class="op">)</span>
 <span class="va">mtcars</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/grouped_calculations.html">summarise_groups</a></span><span class="op">(</span>
-    groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"cyl"</span><span class="op">)</span>,
-    calculations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-      <span class="va">avgMpg</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
-      <span class="va">avgDisp</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">disp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-    <span class="op">)</span>
+    .groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"cyl"</span><span class="op">)</span>,
+    avgMpg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">mpg</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
+    avgDisp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">disp</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   <span class="op">)</span>
 <span class="co"># # A tibble: 6 x 4</span>
 <span class="co">#      am   cyl avgMpg avgDisp</span>
@@ -155,23 +154,23 @@
 <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, col2 <span class="op">=</span> <span class="fl">4</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">8</span><span class="op">)</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/union_select.html">union_select</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col1"</span>, <span class="st">"col3"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#    col1       col3</span>
-<span class="co"># 1     1 -0.1652663</span>
-<span class="co"># 2     2  0.5642257</span>
-<span class="co"># 3     3 -0.2621375</span>
-<span class="co"># 4     4 -1.3734869</span>
-<span class="co"># 5     5 -0.1842106</span>
-<span class="co"># 6     1  1.3066999</span>
-<span class="co"># 7     2  0.8065603</span>
-<span class="co"># 8     3 -0.4230033</span>
-<span class="co"># 9     0 -0.2312634</span>
-<span class="co"># 10    1  0.4222195</span>
-<span class="co"># 11    1  0.2022071</span>
-<span class="co"># 12    2 -0.1268781</span>
-<span class="co"># 13    3 -0.2100050</span>
-<span class="co"># 14    5 -1.3496464</span>
-<span class="co"># 15    8  1.0153586</span></pre></div>
+<span class="fu"><a href="reference/union_select.html">union_select</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col1"</span>, <span class="st">"col3"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#    col1        col3</span>
+<span class="co"># 1     1  0.21700036</span>
+<span class="co"># 2     2 -0.31362518</span>
+<span class="co"># 3     3  0.69415688</span>
+<span class="co"># 4     4  1.05404128</span>
+<span class="co"># 5     5 -0.08270225</span>
+<span class="co"># 6     1 -1.84517413</span>
+<span class="co"># 7     2 -0.34443864</span>
+<span class="co"># 8     3 -2.09040460</span>
+<span class="co"># 9     0 -1.17413911</span>
+<span class="co"># 10    1 -0.60983223</span>
+<span class="co"># 11    1 -1.30439890</span>
+<span class="co"># 12    2 -0.50187069</span>
+<span class="co"># 13    3 -0.22905011</span>
+<span class="co"># 14    5  0.19428320</span>
+<span class="co"># 15    8  1.32125352</span></pre></div>
 </div>
 <div id="cross-joins" class="section level3">
 <h3 class="hasAnchor">
@@ -181,11 +180,11 @@
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, res <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/cross_join.html">cross_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-<span class="co">#   id         val run         res</span>
-<span class="co"># 1  1  0.04907316   1 -0.02114536</span>
-<span class="co"># 2  1  0.04907316   2  1.09011219</span>
-<span class="co"># 3  2 -1.20422625   1 -0.02114536</span>
-<span class="co"># 4  2 -1.20422625   2  1.09011219</span></pre></div>
+<span class="co">#   id        val run        res</span>
+<span class="co"># 1  1  0.4731481   1 -1.7255377</span>
+<span class="co"># 2  1  0.4731481   2  0.9397317</span>
+<span class="co"># 3  2 -0.6241096   1 -1.7255377</span>
+<span class="co"># 4  2 -0.6241096   2  0.9397317</span></pre></div>
 </div>
 </div>
 </div>
@@ -195,9 +194,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/nathaneastwood/sparkplugs/">https://​github.com/​nathaneastwood/​sparkplugs/​</a>
+<li>Browse source code at <br><a href="https://github.com/nathaneastwood/flicker/">https://​github.com/​nathaneastwood/​flicker/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/nathaneastwood/sparkplugs/issues">https://​github.com/​nathaneastwood/​sparkplugs/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/nathaneastwood/flicker/issues">https://​github.com/​nathaneastwood/​flicker/​issues</a>
 </li>
 </ul>
 </div>
@@ -223,10 +222,10 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=sparkplugs"><img src="https://www.r-pkg.org/badges/version/sparkplugs" alt="CRAN status"></a></li>
-<li><a href="https://cran.r-project.org/package=sparkplugs"><img src="https://tinyverse.netlify.com/badge/sparkplugs" alt="Dependencies"></a></li>
-<li><a href="https://github.com/nathaneastwood/sparkplugs/actions?workflow=R-CMD-check"><img src="https://github.com/nathaneastwood/sparkplugs/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/nathaneastwood/sparkplugs"><img src="https://codecov.io/gh/nathaneastwood/sparkplugs/branch/master/graph/badge.svg?token=4BAJ9EB25K" alt="codecov"></a></li>
+<li><a href="https://cran.r-project.org/package=flicker"><img src="https://www.r-pkg.org/badges/version/flicker" alt="CRAN status"></a></li>
+<li><a href="https://cran.r-project.org/package=flicker"><img src="https://tinyverse.netlify.com/badge/flicker" alt="Dependencies"></a></li>
+<li><a href="https://github.com/nathaneastwood/flicker/actions?workflow=R-CMD-check"><img src="https://github.com/nathaneastwood/flicker/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/nathaneastwood/flicker"><img src="https://codecov.io/gh/nathaneastwood/flicker/branch/master/graph/badge.svg?token=4BAJ9EB25K" alt="codecov"></a></li>
 </ul>
 </div>
 </div>
