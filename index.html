@@ -156,21 +156,21 @@
 
 <span class="fu"><a href="reference/union_select.html">union_select</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col1"</span>, <span class="st">"col3"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#    col1        col3</span>
-<span class="co"># 1     1  0.21700036</span>
-<span class="co"># 2     2 -0.31362518</span>
-<span class="co"># 3     3  0.69415688</span>
-<span class="co"># 4     4  1.05404128</span>
-<span class="co"># 5     5 -0.08270225</span>
-<span class="co"># 6     1 -1.84517413</span>
-<span class="co"># 7     2 -0.34443864</span>
-<span class="co"># 8     3 -2.09040460</span>
-<span class="co"># 9     0 -1.17413911</span>
-<span class="co"># 10    1 -0.60983223</span>
-<span class="co"># 11    1 -1.30439890</span>
-<span class="co"># 12    2 -0.50187069</span>
-<span class="co"># 13    3 -0.22905011</span>
-<span class="co"># 14    5  0.19428320</span>
-<span class="co"># 15    8  1.32125352</span></pre></div>
+<span class="co"># 1     1 -0.13611393</span>
+<span class="co"># 2     2  0.41563635</span>
+<span class="co"># 3     3  0.47708645</span>
+<span class="co"># 4     4  1.14018657</span>
+<span class="co"># 5     5  0.27243607</span>
+<span class="co"># 6     1 -0.22989279</span>
+<span class="co"># 7     2 -0.66993838</span>
+<span class="co"># 8     3 -0.81578862</span>
+<span class="co"># 9     0 -0.16289107</span>
+<span class="co"># 10    1 -0.18326974</span>
+<span class="co"># 11    1  0.13986836</span>
+<span class="co"># 12    2 -1.11233562</span>
+<span class="co"># 13    3 -0.05420215</span>
+<span class="co"># 14    5 -0.42905425</span>
+<span class="co"># 15    8  1.18847558</span></pre></div>
 </div>
 <div id="cross-joins" class="section level3">
 <h3 class="hasAnchor">
@@ -180,11 +180,11 @@
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, res <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/cross_join.html">cross_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-<span class="co">#   id        val run        res</span>
-<span class="co"># 1  1  0.4731481   1 -1.7255377</span>
-<span class="co"># 2  1  0.4731481   2  0.9397317</span>
-<span class="co"># 3  2 -0.6241096   1 -1.7255377</span>
-<span class="co"># 4  2 -0.6241096   2  0.9397317</span></pre></div>
+<span class="co">#   id        val run         res</span>
+<span class="co"># 1  1 -0.1449473   1 -0.03545173</span>
+<span class="co"># 2  1 -0.1449473   2 -0.47268349</span>
+<span class="co"># 3  2  1.2202709   1 -0.03545173</span>
+<span class="co"># 4  2  1.2202709   2 -0.47268349</span></pre></div>
 </div>
 </div>
 </div>
