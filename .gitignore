@@ -10,7 +10,7 @@ cran-comments.md
 *.Rproj
 README.html
 .vscode/
-sparkplugs.code-workspace
+flicker.code-workspace
 docs
 inst/doc
 logs/

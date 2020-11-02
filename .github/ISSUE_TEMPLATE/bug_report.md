@@ -19,7 +19,7 @@ A clear and concise description of what you expected to happen.
 **System Information:**
 Please detail the following information
 - `R.version.string`
-- `packageVersion("sparkplugs")`
+- `packageVersion("flicker")`
 
 **Additional context**
 Add any other context about the problem here.

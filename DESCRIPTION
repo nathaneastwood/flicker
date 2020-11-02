@@ -1,13 +1,13 @@
-Package: sparkplugs
+Package: flicker
 Type: Package
 Title: Common Wrappers and Missing Functionality from 'sparklyr' and 'dplyr'
-Version: 0.0.2.2
+Version: 0.0.2.3
 Authors@R: person("Nathan", "Eastwood", "", "nathan.eastwood@icloud.com",
     role = c("aut", "cre"))
 Maintainer: Nathan Eastwood <nathan.eastwood@icloud.com>
 Description: Plugging the gaps of 'sparklyr'.
-URL: https://github.com/nathaneastwood/sparkplugs
-BugReports: https://github.com/nathaneastwood/sparkplugs/issues
+URL: https://github.com/nathaneastwood/flicker
+BugReports: https://github.com/nathaneastwood/flicker/issues
 Depends: R (>= 3.5)
 Imports:
     dplyr (>= 1.0.0),

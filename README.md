@@ -1,21 +1,20 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-{sparkplugs} <a href='https://nathaneastwood.github.io/sparkplugs/'><img src='man/figures/logo.png' align="right" height="139" /></a>
-=====================================================================================================================================
+{flicker} <a href='https://nathaneastwood.github.io/flicker/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+===============================================================================================================================
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
-[![Dependencies](https://tinyverse.netlify.com/badge/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs) [![R
-build
-status](https://github.com/nathaneastwood/sparkplugs/workflows/R-CMD-check/badge.svg)](https://github.com/nathaneastwood/sparkplugs/actions?workflow=R-CMD-check)
-[![codecov](https://codecov.io/gh/nathaneastwood/sparkplugs/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/sparkplugs)
+status](https://www.r-pkg.org/badges/version/flicker)](https://cran.r-project.org/package=flicker)
+[![Dependencies](https://tinyverse.netlify.com/badge/flicker)](https://cran.r-project.org/package=flicker)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/flicker) [![R build
+status](https://github.com/nathaneastwood/flicker/workflows/R-CMD-check/badge.svg)](https://github.com/nathaneastwood/flicker/actions?workflow=R-CMD-check)
+[![codecov](https://codecov.io/gh/nathaneastwood/flicker/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/flicker)
 
 Overview
 --------
 
-{sparkplugs} is a collection of useful wrapper functions and extensions
-to the {dplyr} API which also work with Spark.
+{flicker} is a collection of useful wrapper functions and extensions to
+the {dplyr} API which also work with Spark.
 
 Installation
 ------------
@@ -23,17 +22,17 @@ Installation
 You can install:
 
 -   the development version from
-    [GitHub](https://github.com/nathaneastwood/sparkplugs) with
+    [GitHub](https://github.com/nathaneastwood/flicker) with
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("nathaneastwood/sparkplugs")
+remotes::install_github("nathaneastwood/flicker")
 ```
 
 -   the latest release from CRAN with
 
 ``` r
-install.packages("sparkplugs")
+install.packages("flicker")
 ```
 
 Usage
@@ -45,14 +44,12 @@ These functions offer the benefit over the scoped variants of being able
 to explicitly specify the parameters for each expression to evaluate.
 
 ``` r
-library(sparkplugs)
+library(flicker)
 mtcars %>%
   summarise_groups(
-    groups = c("am", "cyl"),
-    calculations = list(
-      avgMpg ~ mean(mpg, na.rm = TRUE),
-      avgDisp ~ mean(disp, na.rm = TRUE)
-    )
+    .groups = c("am", "cyl"),
+    avgMpg = mean(mpg, na.rm = TRUE),
+    avgDisp = mean(disp, na.rm = TRUE)
   )
 # # A tibble: 6 x 4
 #      am   cyl avgMpg avgDisp
@@ -97,23 +94,23 @@ a <- data.frame(col1 = 1:5, col2 = 6, col3 = rnorm(5))
 b <- data.frame(col1 = 1:3, col2 = 4, col3 = rnorm(3))
 c <- data.frame(col1 = c(0, 1, 1, 2, 3, 5, 8), col3 = rnorm(7))
 
-union_select(data = list(a, b, c), cols = c("col1", "col3"))
-#    col1       col3
-# 1     1 -0.1652663
-# 2     2  0.5642257
-# 3     3 -0.2621375
-# 4     4 -1.3734869
-# 5     5 -0.1842106
-# 6     1  1.3066999
-# 7     2  0.8065603
-# 8     3 -0.4230033
-# 9     0 -0.2312634
-# 10    1  0.4222195
-# 11    1  0.2022071
-# 12    2 -0.1268781
-# 13    3 -0.2100050
-# 14    5 -1.3496464
-# 15    8  1.0153586
+union_select(.data = list(a, b, c), c("col1", "col3"))
+#    col1        col3
+# 1     1  0.21700036
+# 2     2 -0.31362518
+# 3     3  0.69415688
+# 4     4  1.05404128
+# 5     5 -0.08270225
+# 6     1 -1.84517413
+# 7     2 -0.34443864
+# 8     3 -2.09040460
+# 9     0 -1.17413911
+# 10    1 -0.60983223
+# 11    1 -1.30439890
+# 12    2 -0.50187069
+# 13    3 -0.22905011
+# 14    5  0.19428320
+# 15    8  1.32125352
 ```
 
 ### Cross Joins
@@ -126,9 +123,9 @@ the operation in my opinion.
 x <- data.frame(id = 1:2, val = rnorm(2))
 y <- data.frame(run = 1:2, res = rnorm(2))
 cross_join(x, y)
-#   id         val run         res
-# 1  1  0.04907316   1 -0.02114536
-# 2  1  0.04907316   2  1.09011219
-# 3  2 -1.20422625   1 -0.02114536
-# 4  2 -1.20422625   2  1.09011219
+#   id        val run        res
+# 1  1  0.4731481   1 -1.7255377
+# 2  1  0.4731481   2  0.9397317
+# 3  2 -0.6241096   1 -1.7255377
+# 4  2 -0.6241096   2  0.9397317
 ```

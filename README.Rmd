@@ -13,33 +13,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-# {sparkplugs} <a href='https://nathaneastwood.github.io/sparkplugs/'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# {flicker} <a href='https://nathaneastwood.github.io/flicker/'><img src='man/figures/logo.png' align="right" height="139" /></a>
 
-[![CRAN status](https://www.r-pkg.org/badges/version/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
-[![Dependencies](https://tinyverse.netlify.com/badge/sparkplugs)](https://cran.r-project.org/package=sparkplugs)
-![CRAN downloads](https://cranlogs.r-pkg.org/badges/sparkplugs)
-[![R build status](https://github.com/nathaneastwood/sparkplugs/workflows/R-CMD-check/badge.svg)](https://github.com/nathaneastwood/sparkplugs/actions?workflow=R-CMD-check)
-[![codecov](https://codecov.io/gh/nathaneastwood/sparkplugs/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/sparkplugs)
+[![CRAN status](https://www.r-pkg.org/badges/version/flicker)](https://cran.r-project.org/package=flicker)
+[![Dependencies](https://tinyverse.netlify.com/badge/flicker)](https://cran.r-project.org/package=flicker)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/flicker)
+[![R build status](https://github.com/nathaneastwood/flicker/workflows/R-CMD-check/badge.svg)](https://github.com/nathaneastwood/flicker/actions?workflow=R-CMD-check)
+[![codecov](https://codecov.io/gh/nathaneastwood/flicker/branch/master/graph/badge.svg?token=4BAJ9EB25K)](https://codecov.io/gh/nathaneastwood/flicker)
 
 ## Overview
 
-{sparkplugs} is a collection of useful wrapper functions and extensions to the {dplyr} API which also work with Spark.
+{flicker} is a collection of useful wrapper functions and extensions to the {dplyr} API which also work with Spark.
 
 ## Installation
 
 You can install:
 
-* the development version from [GitHub](https://github.com/nathaneastwood/sparkplugs) with
+* the development version from [GitHub](https://github.com/nathaneastwood/flicker) with
 
 ```{r installation, eval = FALSE}
 # install.packages("remotes")
-remotes::install_github("nathaneastwood/sparkplugs")
+remotes::install_github("nathaneastwood/flicker")
 ```
 
 * the latest release from CRAN with
 
 ```{r cran, eval = FALSE}
-install.packages("sparkplugs")
+install.packages("flicker")
 ```
 
 ## Usage
@@ -49,14 +49,12 @@ install.packages("sparkplugs")
 These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for each expression to evaluate.
 
 ```{r grouped}
-library(sparkplugs)
+library(flicker)
 mtcars %>%
   summarise_groups(
-    groups = c("am", "cyl"),
-    calculations = list(
-      avgMpg ~ mean(mpg, na.rm = TRUE),
-      avgDisp ~ mean(disp, na.rm = TRUE)
-    )
+    .groups = c("am", "cyl"),
+    avgMpg = mean(mpg, na.rm = TRUE),
+    avgDisp = mean(disp, na.rm = TRUE)
   )
 ```
 
@@ -77,7 +75,7 @@ a <- data.frame(col1 = 1:5, col2 = 6, col3 = rnorm(5))
 b <- data.frame(col1 = 1:3, col2 = 4, col3 = rnorm(3))
 c <- data.frame(col1 = c(0, 1, 1, 2, 3, 5, 8), col3 = rnorm(7))
 
-union_select(data = list(a, b, c), cols = c("col1", "col3"))
+union_select(.data = list(a, b, c), c("col1", "col3"))
 ```
 
 ### Cross Joins
