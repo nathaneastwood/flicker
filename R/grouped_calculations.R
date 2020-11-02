@@ -1,39 +1,30 @@
 #' Grouped Calculations
 #'
-#' * `mutate_groups()`: Group the data, `.data`, using [dplyr::group_by()] then apply `calculations` using
-#'   [dplyr::mutate()].
-#' * `summarise_groups()`: Group the data, `.data`, using [dplyr::group_by()] then summarise it by applying a
-#'   `calculations` using [dplyr::summarise()].
+#' @description
+#' Each of these functions first group the data using [dplyr::group_by()] and then:
 #'
+#' * `mutate_groups()`: Apply calculations using [dplyr::mutate()].
+#' * `transmute_groups()`: Apply calculations using [dplyr::transmute()].
+#' * `summarise_groups()`: Summarise the data by applying calculations using [dplyr::summarise()].
+#' * `arrange_groups()`: Order the data using [dplyr::arrange()] with `.by_group = TRUE`.
+#'
+#' The respective output is ungrouped.
 #' These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
 #' each expression to evaluate.
 #'
 #' @param .data A Spark `DataFrame` or a `data.frame`. The data to mutate or summarise.
 #' @param groups `character(n)`. The columns to group by.
-#' @param calculations `formula()` or a `list()` of `formula()`s. The calculations to apply where the LHS of the formula
-#' is the name of the new column to create and the RHS is the calculation to apply.
+#' @param ... Arguments to pass onto the respective function.
 #'
 #' @examples
 #' mtcars %>%
-#'   mutate_groups(
-#'     groups = c("am", "cyl"),
-#'     calculations = avgMpg ~ mean(mpg)
-#'   )
+#'   mutate_groups(.groups = c("am", "cyl"), avgMpg = mean(mpg))
 #' mtcars %>%
-#'   summarise_groups(
-#'     groups = c("am", "cyl"),
-#'     calculations = avgMpg ~ mean(mpg)
-#'   )
+#'   summarise_groups(.groups = c("am", "cyl"), avgMpg = mean(mpg))
 #'
-#' # You can pass lists of formulas
+#' # Additional arguments can still be passed to the dplyr functions
 #' mtcars %>%
-#'   mutate_groups(
-#'     groups = c("am", "cyl"),
-#'     calculations = list(
-#'       avgMpg ~ mean(mpg, na.rm = TRUE),
-#'       avgDisp ~ mean(disp, na.rm = TRUE)
-#'     )
-#'   )
+#'   mutate_groups(.groups = "am", avgMpg = mean(mpg), .before = mpg)
 #'
 #' @return
 #' A Spark `DataFrame` or a `data.frame` depending on the input, `.data`.
@@ -43,14 +34,38 @@ NULL
 
 #' @rdname grouped_calculations
 #' @export
-mutate_groups <- function(.data, groups, calculations) {
-  do_grouped_op(.data, groups, calculations, dplyr::mutate)
+mutate_groups <- function(.data, .groups, ...) {
+  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::mutate, ...)
 }
 
 #' @rdname grouped_calculations
 #' @export
-summarise_groups <- function(.data, groups, calculations) {
-  do_grouped_op(.data, groups, calculations, dplyr::summarise)
+summarise_groups <- function(.data, .groups, ...) {
+  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::summarise, ...)
+}
+
+#' @rdname grouped_calculations
+#' @export
+summarize_groups <- summarise_groups
+
+#' @rdname grouped_calculations
+#' @export
+transmute_groups <- function(.data, .groups, ...) {
+  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::transmute, ...)
+}
+
+#' @rdname grouped_calculations
+#' @export
+arrange_groups <- function(.data, .groups, ...) {
+  dots <- dotdotdot(...)
+  if (".by_group" %in% names(dots)) {
+    warning("`.by_group = TRUE` is set by default.")
+    dots[[".by_group"]] <- NULL
+  }
+  do.call(
+    do_grouped_op,
+    c(list(.data = .data), .groups = .groups, .fn = dplyr::arrange, dots, .by_group = TRUE)
+  )
 }
 
 # -- helpers -------------------------------------------------------------------
@@ -61,27 +76,8 @@ summarise_groups <- function(.data, groups, calculations) {
 #' The resulting `DataFrame`/`data.frame`/`tibble`, ungrouped.
 #'
 #' @noRd
-do_grouped_op <- function(.data, groups, calculations, fn) {
-  .data <- dplyr::group_by(.data, !!!rlang::syms(groups))
-  dplyr::ungroup(do.call(fn, c(list(.data = .data), parse_formulas(calculations))))
-}
-
-#' Extract the parts of the formulas. Ensure the columns will have names.
-#'
-#' @return
-#' A list containing two elements:
-#'
-#' * `lhs`: The names of the new columns to create
-#' * `rhs`: The calculations to perform.
-#'
-#' @noRd
-parse_formulas <- function(calculations) {
-  if (!is.list(calculations)) calculations <- list(calculations)
-  rhs <- lapply(calculations, rlang::f_rhs)
-  lhs <- lapply(calculations, function(x) as.character(rlang::f_lhs(x)))
-  if (any(lengths(lhs) == 0L)) {
-    pos <- rlang::exec(unlist, lapply(lhs, function(x) length(x) == 0L))
-    lhs[pos] <- lapply(rhs[pos], deparse)
-  }
-  rlang::set_names(rhs, lhs)
+do_grouped_op <- function(.data, .groups, .fn, ...) {
+  dots <- dotdotdot(...)
+  .data <- dplyr::group_by(.data, !!!rlang::syms(.groups))
+  dplyr::ungroup(do.call(.fn, c(list(.data = .data), dots)))
 }

@@ -4,55 +4,52 @@
 \alias{grouped_calculations}
 \alias{mutate_groups}
 \alias{summarise_groups}
+\alias{summarize_groups}
+\alias{transmute_groups}
+\alias{arrange_groups}
 \title{Grouped Calculations}
 \usage{
-mutate_groups(.data, groups, calculations)
+mutate_groups(.data, .groups, ...)
 
-summarise_groups(.data, groups, calculations)
+summarise_groups(.data, .groups, ...)
+
+summarize_groups(.data, .groups, ...)
+
+transmute_groups(.data, .groups, ...)
+
+arrange_groups(.data, .groups, ...)
 }
 \arguments{
 \item{.data}{A Spark \code{DataFrame} or a \code{data.frame}. The data to mutate or summarise.}
 
-\item{groups}{\code{character(n)}. The columns to group by.}
+\item{...}{Arguments to pass onto the respective function.}
 
-\item{calculations}{\code{formula()} or a \code{list()} of \code{formula()}s. The calculations to apply where the LHS of the formula
-is the name of the new column to create and the RHS is the calculation to apply.}
+\item{groups}{\code{character(n)}. The columns to group by.}
 }
 \value{
 A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
+Each of these functions first group the data using \code{\link[dplyr:group_by]{dplyr::group_by()}} and then:
 \itemize{
-\item \code{mutate_groups()}: Group the data, \code{.data}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then apply \code{calculations} using
-\code{\link[dplyr:mutate]{dplyr::mutate()}}.
-\item \code{summarise_groups()}: Group the data, \code{.data}, using \code{\link[dplyr:group_by]{dplyr::group_by()}} then summarise it by applying a
-\code{calculations} using \code{\link[dplyr:summarise]{dplyr::summarise()}}.
+\item \code{mutate_groups()}: Apply calculations using \code{\link[dplyr:mutate]{dplyr::mutate()}}.
+\item \code{transmute_groups()}: Apply calculations using \code{\link[dplyr:mutate]{dplyr::transmute()}}.
+\item \code{summarise_groups()}: Summarise the data by applying calculations using \code{\link[dplyr:summarise]{dplyr::summarise()}}.
+\item \code{arrange_groups()}: Order the data using \code{\link[dplyr:arrange]{dplyr::arrange()}} with \code{.by_group = TRUE}.
 }
-}
-\details{
+
+The respective output is ungrouped.
 These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
 each expression to evaluate.
 }
 \examples{
 mtcars \%>\%
-  mutate_groups(
-    groups = c("am", "cyl"),
-    calculations = avgMpg ~ mean(mpg)
-  )
+  mutate_groups(.groups = c("am", "cyl"), avgMpg = mean(mpg))
 mtcars \%>\%
-  summarise_groups(
-    groups = c("am", "cyl"),
-    calculations = avgMpg ~ mean(mpg)
-  )
+  summarise_groups(.groups = c("am", "cyl"), avgMpg = mean(mpg))
 
-# You can pass lists of formulas
+# Additional arguments can still be passed to the dplyr functions
 mtcars \%>\%
-  mutate_groups(
-    groups = c("am", "cyl"),
-    calculations = list(
-      avgMpg ~ mean(mpg, na.rm = TRUE),
-      avgDisp ~ mean(disp, na.rm = TRUE)
-    )
-  )
+  mutate_groups(.groups = "am", avgMpg = mean(mpg), .before = mpg)
 
 }

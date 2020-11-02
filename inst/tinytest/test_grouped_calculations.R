@@ -1,12 +1,9 @@
-res <-
-  mtcars %>%
-  summarise_groups(
-    groups = c("am", "cyl"),
-    calculations = list(
-      avgMpg ~ mean(mpg, na.rm = TRUE),
-      avgDisp ~ mean(disp)
-    )
-  )
+res <- summarise_groups(
+  .data = mtcars,
+  .groups = c("am", "cyl"),
+  avgMpg = mean(mpg, na.rm = TRUE),
+  avgDisp = mean(disp)
+)
 expect_equal(
   colnames(res),
   c("am", "cyl", "avgMpg", "avgDisp"),
@@ -18,15 +15,12 @@ expect_equal(
   info = "Ensure the mean is calculated per group"
 )
 
-res <-
-  mtcars %>%
-  mutate_groups(
-    groups = c("am", "cyl"),
-    calculations = list(
-      avgMpg ~ mean(mpg, na.rm = TRUE),
-      avgMpg2 ~ avgMpg * 2
-    )
-  )
+res <- mutate_groups(
+  .data = mtcars,
+  .groups = c("am", "cyl"),
+  avgMpg = mean(mpg, na.rm = TRUE),
+  avgMpg2 = avgMpg * 2
+)
 expect_equal(
   colnames(res),
   c("mpg", "cyl", "disp", "hp", "drat", "wt", "qsec", "vs", "am", "gear", "carb", "avgMpg", "avgMpg2"),
@@ -42,16 +36,11 @@ expect_equal(
   info = "Ensure the mean is calculated per group"
 )
 
+res <- mutate_groups(.data = mtcars, .groups = "am", avgMpg = mean(mpg), .before = mpg)
 expect_equal(
-  sparkplugs:::parse_formulas(x ~ y),
-  list(x = str2lang("y")),
-  info = "calculations don't need to be passed as a list"
-)
-
-expect_equal(
-  sparkplugs:::parse_formulas(~ y),
-  list(y = str2lang("y")),
-  info = "Unnamed formulas will be named"
+  colnames(res)[1],
+  "avgMpg",
+  info = "Additional arguments can still be passed"
 )
 
 # -- Spark ---------------------------------------------------------------------
@@ -60,15 +49,12 @@ if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
   invisible(suppressMessages(sc <- sparklyr::spark_connect(master = "local")))
   mtcars <- dplyr::copy_to(sc, mtcars, "mtcars")
 
-  res <-
-    mtcars %>%
-    summarise_groups(
-      groups = c("am", "cyl"),
-      calculations = list(
-        avgMpg ~ mean(mpg, na.rm = TRUE),
-        avgDisp ~ mean(disp, na.rm = TRUE)
-      )
-    )
+  res <- summarise_groups(
+    .data = mtcars,
+    .groups = c("am", "cyl"),
+    avgMpg = mean(mpg, na.rm = TRUE),
+    avgDisp = mean(disp, na.rm = TRUE)
+  )
   expect_true(inherits(res, "tbl_spark"))
   expect_equal(
     colnames(res),
@@ -76,20 +62,17 @@ if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
     info = "Ensure all columns are created"
   )
   expect_equal(
-    res %>% dplyr::pull(avgMpg),
+    dplyr::pull(res, avgMpg),
     c(15.4, 15.05, 22.9, 20.5666666666667, 28.075, 19.125),
     info = "Ensure the mean is calculated per group"
   )
 
-  res <-
-    mtcars %>%
-    mutate_groups(
-      groups = c("am", "cyl"),
-      calculations = list(
-        avgMpg ~ mean(mpg, na.rm = TRUE),
-        avgMpg2 ~ avgMpg * 2
-      )
-    )
+  res <- mutate_groups(
+    .data = mtcars,
+    .groups = c("am", "cyl"),
+    avgMpg = mean(mpg, na.rm = TRUE),
+    avgMpg2 = avgMpg * 2
+  )
   expect_true(inherits(res, "tbl_spark"))
   expect_equal(
     colnames(res),
@@ -97,7 +80,7 @@ if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
     info = "Ensure all columns are created"
   )
   expect_equal(
-    res %>% dplyr::pull(avgMpg),
+    dplyr::pull(res, avgMpg),
     c(
       15.4, 15.4, 22.9, 22.9, 22.9, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05, 15.05,
       19.125, 19.125, 19.125, 19.125, 28.075, 28.075, 28.075, 28.075, 28.075, 28.075, 28.075, 28.075, 20.5666666666667,
