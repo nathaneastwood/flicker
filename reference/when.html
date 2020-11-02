@@ -82,7 +82,7 @@ predicate." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flicker</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.6</span>
       </span>
     </div>
 
@@ -132,21 +132,21 @@ these functions are subtly different from the scoped variants of dplyr functions
 predicate.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>arrange_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>arrange_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>distinct_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>distinct_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>filter_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>filter_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>group_by_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>group_by_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>mutate_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>mutate_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>select_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>select_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>summarise_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>summarise_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>transmute_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.eval</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>transmute_when</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.cond</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,9 +156,9 @@ predicate.</p>
       <td><p>A Spark <code>DataFrame</code> or a <code>data.frame</code>.</p></td>
     </tr>
     <tr>
-      <th>.eval</th>
-      <td><p>A <code><a href='https://rdrr.io/r/stats/formula.html'>formula()</a></code>. The LHS is the predicate to evaluate. When it evaluates to <code>TRUE</code>, the RHS will be
-performed in the context of the function. The RHS can be in one of several forms:</p><ul>
+      <th>.cond</th>
+      <td><p>A <code><a href='https://rdrr.io/r/stats/formula.html'>formula()</a></code>. The LHS is the predicate condition to evaluate. When it evaluates to <code>TRUE</code>, the RHS
+will be performed in the context of the function. The RHS can be in one of several forms:</p><ul>
 <li><p>An expression, e.g. <code>x * y</code></p></li>
 <li><p>A named expression, e.g. <code><a href='https://rdrr.io/r/base/c.html'>c(z = x * y)</a></code></p></li>
 <li><p>A vector or <code>list</code> of the above.</p></li>
