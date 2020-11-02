@@ -8,7 +8,8 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-Plugging the gaps of 'sparklyr'.
+'flicker' attempts to add convenience wrappers for common 'dplyr' pipelines but also tries to ensure they
+    will work within a Spark context.
 }
 \seealso{
 Useful links:
