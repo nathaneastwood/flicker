@@ -12,27 +12,27 @@
 \alias{transmute_when}
 \title{Evaluate When}
 \usage{
-arrange_when(.data, .eval, ...)
+arrange_when(.data, .cond, ...)
 
-distinct_when(.data, .eval, ...)
+distinct_when(.data, .cond, ...)
 
-filter_when(.data, .eval, ...)
+filter_when(.data, .cond, ...)
 
-group_by_when(.data, .eval, ...)
+group_by_when(.data, .cond, ...)
 
-mutate_when(.data, .eval, ...)
+mutate_when(.data, .cond, ...)
 
-select_when(.data, .eval, ...)
+select_when(.data, .cond, ...)
 
-summarise_when(.data, .eval, ...)
+summarise_when(.data, .cond, ...)
 
-transmute_when(.data, .eval, ...)
+transmute_when(.data, .cond, ...)
 }
 \arguments{
 \item{.data}{A Spark \code{DataFrame} or a \code{data.frame}.}
 
-\item{.eval}{A \code{formula()}. The LHS is the predicate to evaluate. When it evaluates to \code{TRUE}, the RHS will be
-performed in the context of the function. The RHS can be in one of several forms:
+\item{.cond}{A \code{formula()}. The LHS is the predicate condition to evaluate. When it evaluates to \code{TRUE}, the RHS
+will be performed in the context of the function. The RHS can be in one of several forms:
 \itemize{
 \item An expression, e.g. \code{x * y}
 \item A named expression, e.g. \code{c(z = x * y)}

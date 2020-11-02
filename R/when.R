@@ -5,8 +5,8 @@
 #' predicate.
 #'
 #' @param .data A Spark `DataFrame` or a `data.frame`.
-#' @param .eval A `formula()`. The LHS is the predicate to evaluate. When it evaluates to `TRUE`, the RHS will be
-#' performed in the context of the function. The RHS can be in one of several forms:
+#' @param .cond A `formula()`. The LHS is the predicate condition to evaluate. When it evaluates to `TRUE`, the RHS
+#'  will be performed in the context of the function. The RHS can be in one of several forms:
 #'
 #' * An expression, e.g. `x * y`
 #' * A named expression, e.g. `c(z = x * y)`
@@ -38,50 +38,50 @@ NULL
 
 #' @rdname when
 #' @export
-arrange_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::arrange, .name = FALSE, ...)
+arrange_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::arrange, .name = FALSE, ...)
 }
 
 #' @rdname when
 #' @export
-distinct_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::distinct, .name = TRUE, ...)
+distinct_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::distinct, .name = TRUE, ...)
 }
 
 #' @rdname when
 #' @export
-filter_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::filter, .name = FALSE, ...)
+filter_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::filter, .name = FALSE, ...)
 }
 
 #' @rdname when
 #' @export
-group_by_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::group_by, .name = FALSE, ...)
+group_by_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::group_by, .name = FALSE, ...)
 }
 
 #' @rdname when
 #' @export
-mutate_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::mutate, .name = TRUE, ...)
+mutate_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::mutate, .name = TRUE, ...)
 }
 
 #' @rdname when
 #' @export
-select_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::select, .name = TRUE, ...)
+select_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::select, .name = TRUE, ...)
 }
 
 #' @rdname when
 #' @export
-summarise_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::summarise, .name = TRUE, ...)
+summarise_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::summarise, .name = TRUE, ...)
 }
 
 #' @rdname when
 #' @export
-transmute_when <- function(.data, .eval, ...) {
-  do_when(.data, .eval, dplyr::transmute, .name = TRUE, ...)
+transmute_when <- function(.data, .cond, ...) {
+  do_when(.data, .cond, dplyr::transmute, .name = TRUE, ...)
 }
 
 # -- helpers -------------------------------------------------------------------
@@ -90,17 +90,17 @@ transmute_when <- function(.data, .eval, ...) {
 #' @inheritParams desconstruct_rhs
 #' @param .fn `language`. The function to call.
 #' @noRd
-do_when <- function(.data, .eval, .fn, .name = TRUE, ...) {
-  lhs <- rlang::f_lhs(.eval)
-  rhs <- rlang::f_rhs(.eval)
+do_when <- function(.data, .cond, .fn, .name = TRUE, ...) {
+  lhs <- rlang::f_lhs(.cond)
+  rhs <- rlang::f_rhs(.cond)
   test <- eval(lhs)
   if (!is.logical(test) || !length(test) == 1L || is.na(test)) {
-    stop("`.eval` should evaluate to a `logical(1)` vector.")
+    stop("`.cond` should evaluate to a `logical(1)` vector.")
   }
   if (test) do.call(.fn, c(list(.data = .data), deconstruct_rhs(rhs, .name), ...)) else .data
 }
 
-#' @param rhs `formula()`. The RHS of `.eval`.
+#' @param rhs `formula()`. The RHS of `.cond`.
 #' @param .name `logical(1)`. Whether to name the RHS elements of the formula. This will feed into naming new columns.
 #' @noRd
 deconstruct_rhs <- function(rhs, .name = TRUE) {
