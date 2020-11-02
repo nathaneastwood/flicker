@@ -4,17 +4,19 @@
 \alias{union_select}
 \title{Union Select Columns From Multiple Datasets}
 \usage{
-union_select(data, cols = NULL, all = TRUE)
+union_select(.data, ..., .all = TRUE)
 }
 \arguments{
-\item{data}{A \code{list()} of \code{data.frame}s or Spark \code{DataFrame}s.}
+\item{.data}{A \code{list()} of \code{data.frame}s or Spark \code{DataFrame}s.}
 
-\item{cols}{\code{character(n)}. The name(s) of the columns to return (def: \code{NULL}).}
+\item{...}{<\code{\link[=dplyr_tidy_select]{tidy-select}}> One or more unquoted expressions separated by commas. Variable names
+can be used as if they were positions in the \code{data.frame}, so expressions like \code{x:y} can be used to select a range
+of variables.}
 
-\item{all}{\code{logical(1)}. Whether to keep duplicate records (def: \code{TRUE}) or not (\code{FALSE}).}
+\item{.all}{\code{logical(1)}. Whether to keep duplicate records (def: \code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{data}.
+A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
 This function will union the records from multiple data sets returning only the requested columns (all of which are
@@ -26,9 +28,9 @@ b <- data.frame(col1 = c(1:5, 5), col2 = 4)
 c <- data.frame(col1 = c(0, 1, 1, 2, 3, 5, 8))
 
 # You can union specific columns
-union_select(data = list(a, b, c), cols = "col1")
+union_select(.data = list(a, b, c), "col1")
 
 # And you can remove duplicate records
-union_select(data = list(a, b, c), cols = "col1", all = FALSE)
+union_select(.data = list(a, b, c), ends_with("1"), .all = FALSE)
 
 }

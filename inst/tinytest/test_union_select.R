@@ -7,15 +7,15 @@ expect_equal(
 )
 
 expect_equal(
-  union_select(list(df, df, df), cols = c("a", "c")),
+  union_select(list(df, df, df), c("a", "c")),
   data.frame(a = rep(1, 3), c = rep(3, 3)),
   info = "The user can select specific columns"
 )
 
 expect_equal(
-  union_select(list(df, df, df), all = FALSE),
+  union_select(list(df, df, df), .all = FALSE),
   df,
-  info = "Duplicate records are dropped when `all = FALSE`"
+  info = "Duplicate records are dropped when `.all = FALSE`"
 )
 
 expect_equal(
@@ -30,13 +30,8 @@ expect_error(
 )
 
 expect_error(
-  union_select(list(mtcars), all = 1),
-  info = "`all` should be a `logical(1)` vector"
-)
-
-expect_error(
-  union_select(list(mtcars), cols = 1),
-  info = "`cols` should be a `character(n)` vector"
+  union_select(list(mtcars), .all = 1),
+  info = "`.all` should be a `logical(1)` vector"
 )
 
 # -- Spark ---------------------------------------------------------------------
@@ -52,15 +47,15 @@ if (identical(as.logical(Sys.getenv("NOT_ON_CRAN")), TRUE)) {
   )
 
   expect_equal(
-    union_select(list(df, df, df), cols = c("a", "c")) %>% sparklyr::sdf_dim(),
+    union_select(list(df, df, df), c("a", "c")) %>% sparklyr::sdf_dim(),
     c(3, 2),
     info = "The user can select specific columns in Spark"
   )
 
   expect_equal(
-    union_select(list(df, df, df), all = FALSE) %>% sparklyr::sdf_dim(),
+    union_select(list(df, df, df), .all = FALSE) %>% sparklyr::sdf_dim(),
     c(1, 3),
-    info = "Duplicate records are dropped when `all = FALSE` in Spark"
+    info = "Duplicate records are dropped when `.all = FALSE` in Spark"
   )
 
   sparklyr::spark_disconnect_all()
