@@ -1,12 +1,12 @@
 Package: flicker
 Type: Package
 Title: Common Wrappers and Missing Functionality from 'sparklyr' and 'dplyr'
-Version: 0.0.2.9
+Version: 0.0.3
 Authors@R: person("Nathan", "Eastwood", "", "nathan.eastwood@icloud.com",
     role = c("aut", "cre"))
 Maintainer: Nathan Eastwood <nathan.eastwood@icloud.com>
-Description: 'flicker' attempts to add convenience wrappers for common 'dplyr' pipelines but also tries to ensure they
-    will work within a Spark context.
+Description: 'flicker' adds convenience wrappers for common 'dplyr' pipelines but also ensures they will work within a
+    Spark context.
 URL: https://github.com/nathaneastwood/flicker
 BugReports: https://github.com/nathaneastwood/flicker/issues
 Depends: R (>= 3.5)
