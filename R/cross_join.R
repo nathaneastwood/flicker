@@ -21,6 +21,7 @@
 #' cross_join(x, x)
 #'
 #' @importFrom dplyr full_join
+#' @importFrom utils packageVersion
 #' @name cross_join
 NULL
 
@@ -40,7 +41,7 @@ cross_join.tbl_lazy <- function(x, y, copy = FALSE, suffix = c("_x", "_y"), ...,
 #' @export
 cross_join.data.frame <- function(x, y, copy = FALSE, suffix = c("_x", "_y"), ..., na_matches = c("na", "never")) {
   na_matches <- match.arg(na_matches, choices = c("na", "never"), several.ok = FALSE)
-  if (packageVersion("dplyr") < "1.0.0") { # nocov start
+  if (utils::packageVersion("dplyr") < "1.0.0") { # nocov start
     warning("`na_matches` only works for {dplyr} version '1.0.0' and above.")
     common_cols <- intersect(colnames(x), colnames(y))
 
