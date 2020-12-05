@@ -55,7 +55,7 @@ transmute_groups <- function(.data, .groups, ...) {
 #' @rdname grouped_calculations
 #' @export
 arrange_groups <- function(.data, .groups, ...) {
-  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::arange, ..., .by_group = TRUE)
+  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::arrange, ..., .by_group = TRUE)
 }
 
 # -- helpers -------------------------------------------------------------------
