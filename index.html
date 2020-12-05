@@ -92,14 +92,14 @@
 <ul>
 <li>the development version from <a href="https://github.com/nathaneastwood/flicker">GitHub</a> with</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nathaneastwood/flicker"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"nathaneastwood/flicker"</span><span class="op">)</span></code></pre></div>
 <ul>
 <li>the latest release from CRAN with</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"flicker"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"flicker"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -108,8 +108,8 @@
 <h3 class="hasAnchor">
 <a href="#grouped-operations" class="anchor"></a>Grouped Operations</h3>
 <p>These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for each expression to evaluate.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nathaneastwood/flicker">flicker</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nathaneastwood/flicker">flicker</a></span><span class="op">)</span>
 <span class="va">mtcars</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/grouped_calculations.html">summarise_groups</a></span><span class="op">(</span>
     .groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"am"</span>, <span class="st">"cyl"</span><span class="op">)</span>,
@@ -124,14 +124,49 @@
 <span class="co"># 3     0     8   15.0   358. </span>
 <span class="co"># 4     1     4   28.1    93.6</span>
 <span class="co"># 5     1     6   20.6   155  </span>
-<span class="co"># 6     1     8   15.4   326</span></pre></div>
+<span class="co"># 6     1     8   15.4   326</span></code></pre></div>
 </div>
 <div id="scoped-variant-when" class="section level3">
 <h3 class="hasAnchor">
 <a href="#scoped-variant-when" class="anchor"></a>Scoped Variant “when”</h3>
 <p>These functions are subtly different from the scoped <code>_if()</code> variants of {dplyr} functions in that they can evaluate any predicate. They are useful when used within a chain of commands.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/when.html">filter_when</a></span><span class="op">(</span><span class="st">"cyl"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">~</span> <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">previous_result</span> <span class="op">&lt;-</span> <span class="fl">42</span>
+<span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/when.html">filter_when</a></span><span class="op">(</span><span class="va">previous_result</span> <span class="op">&lt;</span> <span class="fl">42</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class="co"># Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
+<span class="co"># Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
+<span class="co"># Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class="co"># Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
+<span class="co"># Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span>
+<span class="co"># Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
+<span class="co"># Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span>
+<span class="co"># Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class="co"># Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class="co"># Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span>
+<span class="co"># Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span>
+<span class="co"># Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3</span>
+<span class="co"># Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3</span>
+<span class="co"># Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3</span>
+<span class="co"># Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span>
+<span class="co"># Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span>
+<span class="co"># Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4</span>
+<span class="co"># Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class="co"># Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class="co"># Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class="co"># Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class="co"># Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2</span>
+<span class="co"># AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</span>
+<span class="co"># Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4</span>
+<span class="co"># Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</span>
+<span class="co"># Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class="co"># Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class="co"># Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class="co"># Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4</span>
+<span class="co"># Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</span>
+<span class="co"># Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
+<span class="co"># Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
+<span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/when.html">filter_when</a></span><span class="op">(</span><span class="va">previous_result</span> <span class="op">&gt;=</span> <span class="fl">42</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
 <span class="co">#                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
 <span class="co"># Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
 <span class="co"># Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
@@ -143,48 +178,63 @@
 <span class="co"># Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
 <span class="co"># Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
 <span class="co"># Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
-<span class="co"># Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></pre></div>
+<span class="co"># Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></code></pre></div>
+<p>But we can also perform these checks as if using the scoped variants of {dplyr} functions.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/when.html">filter_when</a></span><span class="op">(</span><span class="st">"mpg"</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="va">cyl</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span>
+<span class="co">#                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class="co"># Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class="co"># Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class="co"># Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class="co"># Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class="co"># Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class="co"># Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class="co"># Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class="co"># Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class="co"># Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class="co"># Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class="co"># Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span></code></pre></div>
 </div>
 <div id="union-select" class="section level3">
 <h3 class="hasAnchor">
 <a href="#union-select" class="anchor"></a>Union Select</h3>
 <p>This function will union the records from multiple data sets returning only the requested columns.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, col2 <span class="op">=</span> <span class="fl">6</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, col2 <span class="op">=</span> <span class="fl">6</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, col2 <span class="op">=</span> <span class="fl">4</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>col1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">8</span><span class="op">)</span>, col3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/union_select.html">union_select</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">a</span>, <span class="va">b</span>, <span class="va">c</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"col1"</span>, <span class="st">"col3"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#    col1        col3</span>
-<span class="co"># 1     1 -0.13611393</span>
-<span class="co"># 2     2  0.41563635</span>
-<span class="co"># 3     3  0.47708645</span>
-<span class="co"># 4     4  1.14018657</span>
-<span class="co"># 5     5  0.27243607</span>
-<span class="co"># 6     1 -0.22989279</span>
-<span class="co"># 7     2 -0.66993838</span>
-<span class="co"># 8     3 -0.81578862</span>
-<span class="co"># 9     0 -0.16289107</span>
-<span class="co"># 10    1 -0.18326974</span>
-<span class="co"># 11    1  0.13986836</span>
-<span class="co"># 12    2 -1.11233562</span>
-<span class="co"># 13    3 -0.05420215</span>
-<span class="co"># 14    5 -0.42905425</span>
-<span class="co"># 15    8  1.18847558</span></pre></div>
+<span class="co">#    col1       col3</span>
+<span class="co"># 1     1 -1.5936792</span>
+<span class="co"># 2     2  0.4583218</span>
+<span class="co"># 3     3 -0.7568519</span>
+<span class="co"># 4     4  1.3170420</span>
+<span class="co"># 5     5 -0.6419245</span>
+<span class="co"># 6     1  0.5815826</span>
+<span class="co"># 7     2  1.6735513</span>
+<span class="co"># 8     3  0.8638010</span>
+<span class="co"># 9     0 -1.2806895</span>
+<span class="co"># 10    1  0.1915506</span>
+<span class="co"># 11    1 -0.1021699</span>
+<span class="co"># 12    2 -0.9799384</span>
+<span class="co"># 13    3 -1.2197154</span>
+<span class="co"># 14    5 -0.9946515</span>
+<span class="co"># 15    8 -0.1872739</span></code></pre></div>
 </div>
 <div id="cross-joins" class="section level3">
 <h3 class="hasAnchor">
 <a href="#cross-joins" class="anchor"></a>Cross Joins</h3>
-<p>As of {dplyr} 1.0.0, cross joins have been available through the use of <code>full_join(by = character())</code> but this is not a natural way to perform the operation in my opinion.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<p>As of {dplyr} 1.0.0, cross joins have been available through the use of <code>full_join(by = character())</code> but this is not a natural way to perform the operation in my opinion. {flicker} provides a way to perform cross joins for earlier versions of {dplyr}.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, val <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, res <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="reference/cross_join.html">cross_join</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span>
-<span class="co">#   id        val run         res</span>
-<span class="co"># 1  1 -0.1449473   1 -0.03545173</span>
-<span class="co"># 2  1 -0.1449473   2 -0.47268349</span>
-<span class="co"># 3  2  1.2202709   1 -0.03545173</span>
-<span class="co"># 4  2  1.2202709   2 -0.47268349</span></pre></div>
+<span class="co">#   id        val run        res</span>
+<span class="co"># 1  1 0.17952160   1  0.2839802</span>
+<span class="co"># 2  1 0.17952160   2 -0.2063309</span>
+<span class="co"># 3  2 0.08163433   1  0.2839802</span>
+<span class="co"># 4  2 0.08163433   2 -0.2063309</span></code></pre></div>
 </div>
 </div>
 </div>

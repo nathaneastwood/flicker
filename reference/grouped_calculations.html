@@ -54,9 +54,7 @@ summarise_groups(): Summarise the data by applying calculations using dplyr::sum
 arrange_groups(): Order the data using dplyr::arrange() with .by_group = TRUE.
 
 
-The respective output is ungrouped.
-These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
-each expression to evaluate." />
+The respective output is ungrouped." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -141,9 +139,7 @@ each expression to evaluate." />
 <li><p><code>arrange_groups()</code>: Order the data using <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>dplyr::arrange()</a></code> with <code>.by_group = TRUE</code>.</p></li>
 </ul>
 
-<p>The respective output is ungrouped.
-These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
-each expression to evaluate.</p>
+<p>The respective output is ungrouped.</p>
     </div>
 
     <pre class="usage"><span class='fu'>mutate_groups</span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>.groups</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -161,21 +157,21 @@ each expression to evaluate.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>A Spark <code>DataFrame</code> or a <code>data.frame</code>. The data to mutate or summarise.</p></td>
+      <td><p>A <code>tbl_spark</code> or a <code>data.frame</code>.</p></td>
+    </tr>
+    <tr>
+      <th>.groups</th>
+      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(n)</a></code>. The columns to group by.</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>Arguments to pass onto the respective function.</p></td>
     </tr>
-    <tr>
-      <th>groups</th>
-      <td><p><code><a href='https://rdrr.io/r/base/character.html'>character(n)</a></code>. The columns to group by.</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Spark <code>DataFrame</code> or a <code>data.frame</code> depending on the input, <code>.data</code>.</p>
+    <p>A <code>tbl_spark</code> or a <code>data.frame</code> depending on the input, <code>.data</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
