@@ -7,7 +7,7 @@
 union_select(.data, ..., .all = TRUE)
 }
 \arguments{
-\item{.data}{A \code{list()} of \code{data.frame}s or Spark \code{DataFrame}s.}
+\item{.data}{A \code{list()} of \code{data.frame}s or \code{tbl_spark}s.}
 
 \item{...}{<\code{\link[=dplyr_tidy_select]{tidy-select}}> One or more unquoted expressions separated by commas. Variable names
 can be used as if they were positions in the \code{data.frame}, so expressions like \code{x:y} can be used to select a range
@@ -16,7 +16,7 @@ of variables.}
 \item{.all}{\code{logical(1)}. Whether to keep duplicate records (def: \code{TRUE}) or not (\code{FALSE}).}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
+A \code{tbl_spark} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
 This function will union the records from multiple data sets returning only the requested columns (all of which are

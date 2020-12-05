@@ -29,41 +29,44 @@ summarise_when(.data, .cond, ...)
 transmute_when(.data, .cond, ...)
 }
 \arguments{
-\item{.data}{A Spark \code{DataFrame} or a \code{data.frame}.}
+\item{.data}{A \code{tbl_spark} or a \code{data.frame}.}
 
-\item{.cond}{A \code{formula()}. The LHS is the predicate condition to evaluate. When it evaluates to \code{TRUE}, the RHS
-will be performed in the context of the function. The RHS can be in one of several forms:
-\itemize{
-\item An expression, e.g. \code{x * y}
-\item A named expression, e.g. \code{c(z = x * y)}
-\item A vector or \code{list} of the above.
-}
+\item{.cond}{A condition that will evaluate to a \code{logical(1)}. When it evaluates to \code{TRUE}, arguments passed to
+\code{...} will be evaluated in the context of \code{.data}.}
 
-Note: named expressions must be wrapped in \code{c()} or \code{list()}.}
-
-\item{...}{Additional parameters to pass to the dplyr function.}
+\item{...}{Additional parameters to pass to the {dplyr} function.}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
+A \code{tbl_spark} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
-Evaluate expressions against a Spark \code{DataFrame} (or \code{data.frame}) if a predicate evaluates to \code{TRUE}. Note that
-these functions are subtly different from the scoped variants of dplyr functions in that they can evaluate any
-predicate.
+Evaluate conditional expressions and if it evaluates to \code{TRUE}, execute the function call's logic. Note that these
+functions are subtly different from the scoped variants of {dplyr} functions in that they can evaluate any condition.
+If the condition evaluates to \code{FALSE}, these functions will return the original data.
 }
 \examples{
-# Unname expressions will return columns with the expression as the name
-mtcars \%>\% mutate_when("cyl" \%in\% colnames(mtcars) ~ mpg * 2)
+# Let's say we have another object and based on this object we
+# want to perform some conditional logic
+previous_result <- 42
 
-# But we can name them easily enough
-mtcars \%>\% mutate_when("cyl" \%in\% colnames(mtcars) ~ c(mpg2 = mpg * 2))
+# We can evaluate expressions in the same way as the dplyr function.
+# If the evaluation is FALSE, it will return the original data.
+mtcars \%>\%
+  mutate_when(previous_result < 42, mpg * 2)
+# And if the condition if TRUE, it will evaluate
+mtcars \%>\%
+  mutate_when(previous_result >= 42, mpg * 2)
 
 # We can evaluate multiple expressions
 mtcars \%>\%
-  mutate_when("cyl" \%in\% colnames(mtcars) ~ c(mpg2 = mpg * 2, mpg4 = mpg * 2))
+  mutate_when(previous_result >= 42, mpg2 = mpg * 2, mpg4 = mpg * 2)
 
 # We can still use functionality such as tidy-select
 mtcars \%>\%
-  select_when("cyl" \%in\% colnames(mtcars) ~ c(Cylinders = cyl, everything()))
+  select_when(previous_result >= 42, Cylinders = cyl, everything())
+
+# We can also evaluate logic that is conditional on .data
+mtcars \%>\%
+  filter_when("mpg" \%in\% colnames(.), cyl == 4)
 
 }

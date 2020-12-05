@@ -63,7 +63,15 @@ mtcars %>%
 These functions are subtly different from the scoped `_if()` variants of {dplyr} functions in that they can evaluate any predicate. They are useful when used within a chain of commands.
 
 ```{r when}
-mtcars %>% filter_when("cyl" %in% colnames(mtcars) ~ cyl == 4)
+previous_result <- 42
+mtcars %>% filter_when(previous_result < 42, cyl == 4)
+mtcars %>% filter_when(previous_result >= 42, cyl == 4)
+```
+
+But we can also perform these checks as if using the scoped variants of {dplyr} functions.
+
+```{r when2}
+mtcars %>% filter_when("mpg" %in% colnames(.), cyl == 4)
 ```
 
 ### Union Select
@@ -80,7 +88,7 @@ union_select(.data = list(a, b, c), c("col1", "col3"))
 
 ### Cross Joins
 
-As of {dplyr} 1.0.0, cross joins have been available through the use of `full_join(by = character())` but this is not a natural way to perform the operation in my opinion.
+As of {dplyr} 1.0.0, cross joins have been available through the use of `full_join(by = character())` but this is not a natural way to perform the operation in my opinion. {flicker} provides a way to perform cross joins for earlier versions of {dplyr}.
 
 ```{r cross_join}
 x <- data.frame(id = 1:2, val = rnorm(2))

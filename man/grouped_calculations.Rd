@@ -20,14 +20,14 @@ transmute_groups(.data, .groups, ...)
 arrange_groups(.data, .groups, ...)
 }
 \arguments{
-\item{.data}{A Spark \code{DataFrame} or a \code{data.frame}. The data to mutate or summarise.}
+\item{.data}{A \code{tbl_spark} or a \code{data.frame}.}
+
+\item{.groups}{\code{character(n)}. The columns to group by.}
 
 \item{...}{Arguments to pass onto the respective function.}
-
-\item{groups}{\code{character(n)}. The columns to group by.}
 }
 \value{
-A Spark \code{DataFrame} or a \code{data.frame} depending on the input, \code{.data}.
+A \code{tbl_spark} or a \code{data.frame} depending on the input, \code{.data}.
 }
 \description{
 Each of these functions first group the data using \code{\link[dplyr:group_by]{dplyr::group_by()}} and then:
@@ -39,8 +39,6 @@ Each of these functions first group the data using \code{\link[dplyr:group_by]{d
 }
 
 The respective output is ungrouped.
-These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
-each expression to evaluate.
 }
 \examples{
 mtcars \%>\%

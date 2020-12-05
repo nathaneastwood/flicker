@@ -9,11 +9,9 @@
 #' * `arrange_groups()`: Order the data using [dplyr::arrange()] with `.by_group = TRUE`.
 #'
 #' The respective output is ungrouped.
-#' These functions offer the benefit over the scoped variants of being able to explicitly specify the parameters for
-#' each expression to evaluate.
 #'
-#' @param .data A Spark `DataFrame` or a `data.frame`. The data to mutate or summarise.
-#' @param groups `character(n)`. The columns to group by.
+#' @param .data A `tbl_spark` or a `data.frame`.
+#' @param .groups `character(n)`. The columns to group by.
 #' @param ... Arguments to pass onto the respective function.
 #'
 #' @examples
@@ -27,7 +25,7 @@
 #'   mutate_groups(.groups = "am", avgMpg = mean(mpg), .before = mpg)
 #'
 #' @return
-#' A Spark `DataFrame` or a `data.frame` depending on the input, `.data`.
+#' A `tbl_spark` or a `data.frame` depending on the input, `.data`.
 #'
 #' @name grouped_calculations
 NULL
@@ -57,27 +55,18 @@ transmute_groups <- function(.data, .groups, ...) {
 #' @rdname grouped_calculations
 #' @export
 arrange_groups <- function(.data, .groups, ...) {
-  dots <- dotdotdot(...)
-  if (".by_group" %in% names(dots)) {
-    warning("`.by_group = TRUE` is set by default.")
-    dots[[".by_group"]] <- NULL
-  }
-  do.call(
-    do_grouped_op,
-    c(list(.data = .data), .groups = .groups, .fn = dplyr::arrange, dots, .by_group = TRUE)
-  )
+  do_grouped_op(.data = .data, .groups = .groups, .fn = dplyr::arange, ..., .by_group = TRUE)
 }
 
 # -- helpers -------------------------------------------------------------------
 
-#' Perform a group by operation on a Spark `DataFrame` or a `data.frame`/`tibble`.
+#' Perform a group by operation on a `tbl_spark` or a `data.frame`/`tibble`.
 #'
 #' @return
-#' The resulting `DataFrame`/`data.frame`/`tibble`, ungrouped.
+#' The resulting `tbl_spark`/`data.frame`/`tibble` (depending on the input), ungrouped.
 #'
 #' @noRd
 do_grouped_op <- function(.data, .groups, .fn, ...) {
-  dots <- dotdotdot(...)
   .data <- dplyr::group_by(.data, !!!rlang::syms(.groups))
-  dplyr::ungroup(do.call(.fn, c(list(.data = .data), dots)))
+  dplyr::ungroup(x = .fn(.data = .data, ...))
 }

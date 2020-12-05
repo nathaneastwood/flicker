@@ -9,20 +9,8 @@
 #' of memory and trigger an OOM. If the join type is not `Inner`, Spark SQL could use a Broadcast Nested Loop Join even
 #' if both sides of tables are not small enough. Thus, it also could cause lots of unwanted network traffic.
 #'
-#' @param x,y A pair of `data.frame`s, `data.frame` extensions (e.g. a `tibble`), or lazy `data.frame`s (e.g. from
-#' {dbplyr} or {dtplyr}).
-#' @param copy `logical(1)`. If `x` and `y` are not from the same data source, and `copy` is `TRUE`, then `y` will be
-#' copied into the same src as `x`. This allows you to join tables across srcs, but it is a potentially expensive
-#' operation so you must opt into it.
-#' @param suffix `character(2)`. If there are non-joined duplicate variables in `x` and `y`, these suffixes will be
-#' added to the output to disambiguate them.
-#' @param ... Other parameters passed onto methods.
-#' @param na_matches Should `NA` and `NaN` values match one another?
-#'
-#' The default, `"na"`, treats two `NA` or `NaN` values as equal, like `%in%`, [match()], [merge()].
-#'
-#' Use `"never"` to always treat two `NA` or `NaN` values as different, like joins for database sources, similarly to
-#' `merge(incomparables = FALSE)`.
+#' @param x,y A pair of `tbl_spark`s or `data.frame`s.
+#' @inheritParams dbplyr::full_join.tbl_lazy
 #'
 #' @examples
 #' x <- data.frame(
@@ -38,19 +26,19 @@ NULL
 
 #' @rdname cross_join
 #' @export
-cross_join <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_matches = c("never", "na")) {
+cross_join <- function(x, y, copy = FALSE, suffix = c("_x", "_y"), ..., na_matches = c("never", "na")) {
   UseMethod("cross_join")
 }
 
 #' @rdname cross_join
 #' @export
-cross_join.tbl_lazy <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_matches = c("never", "na")) {
+cross_join.tbl_lazy <- function(x, y, copy = FALSE, suffix = c("_x", "_y"), ..., na_matches = c("never", "na")) {
   dplyr::full_join(x = x, y = y, by = character(), copy = copy, suffix = suffix, ..., na_matches = na_matches) # nocov
 }
 
 #' @rdname cross_join
 #' @export
-cross_join.data.frame <- function(x, y, copy = FALSE, suffix = c(".x", ".y"), ..., na_matches = c("na", "never")) {
+cross_join.data.frame <- function(x, y, copy = FALSE, suffix = c("_x", "_y"), ..., na_matches = c("na", "never")) {
   na_matches <- match.arg(na_matches, choices = c("na", "never"), several.ok = FALSE)
   if (packageVersion("dplyr") < "1.0.0") { # nocov start
     warning("`na_matches` only works for {dplyr} version '1.0.0' and above.")

@@ -3,14 +3,14 @@
 #' This function will union the records from multiple data sets returning only the requested columns (all of which are
 #' assumed to be named the same between data sets).
 #'
-#' @param .data A `list()` of `data.frame`s or Spark `DataFrame`s.
+#' @param .data A `list()` of `data.frame`s or `tbl_spark`s.
 #' @param ... <[`tidy-select`][dplyr_tidy_select]> One or more unquoted expressions separated by commas. Variable names
 #' can be used as if they were positions in the `data.frame`, so expressions like `x:y` can be used to select a range
 #' of variables.
 #' @param .all `logical(1)`. Whether to keep duplicate records (def: `TRUE`) or not (`FALSE`).
 #'
 #' @return
-#' A Spark `DataFrame` or a `data.frame` depending on the input, `.data`.
+#' A `tbl_spark` or a `data.frame` depending on the input, `.data`.
 #'
 #' @examples
 #' a <- data.frame(col1 = c(1:10, 10), col2 = 6)

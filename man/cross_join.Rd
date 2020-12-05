@@ -10,7 +10,7 @@ cross_join(
   x,
   y,
   copy = FALSE,
-  suffix = c(".x", ".y"),
+  suffix = c("_x", "_y"),
   ...,
   na_matches = c("never", "na")
 )
@@ -19,7 +19,7 @@ cross_join(
   x,
   y,
   copy = FALSE,
-  suffix = c(".x", ".y"),
+  suffix = c("_x", "_y"),
   ...,
   na_matches = c("never", "na")
 )
@@ -28,30 +28,34 @@ cross_join(
   x,
   y,
   copy = FALSE,
-  suffix = c(".x", ".y"),
+  suffix = c("_x", "_y"),
   ...,
   na_matches = c("na", "never")
 )
 }
 \arguments{
-\item{x, y}{A pair of \code{data.frame}s, \code{data.frame} extensions (e.g. a \code{tibble}), or lazy \code{data.frame}s (e.g. from
-{dbplyr} or {dtplyr}).}
+\item{x, y}{A pair of \code{tbl_spark}s or \code{data.frame}s.}
 
-\item{copy}{\code{logical(1)}. If \code{x} and \code{y} are not from the same data source, and \code{copy} is \code{TRUE}, then \code{y} will be
-copied into the same src as \code{x}. This allows you to join tables across srcs, but it is a potentially expensive
+\item{copy}{If \code{x} and \code{y} are not from the same data source,
+and \code{copy} is \code{TRUE}, then \code{y} will be copied into a
+temporary table in same database as \code{x}. \verb{*_join()} will automatically
+run \code{ANALYZE} on the created table in the hope that this will make
+you queries as efficient as possible by giving more data to the query
+planner.
+
+This allows you to join tables across srcs, but it's potentially expensive
 operation so you must opt into it.}
 
-\item{suffix}{\code{character(2)}. If there are non-joined duplicate variables in \code{x} and \code{y}, these suffixes will be
-added to the output to disambiguate them.}
+\item{suffix}{If there are non-joined duplicate variables in \code{x} and
+\code{y}, these suffixes will be added to the output to disambiguate them.
+Should be a character vector of length 2.}
 
 \item{...}{Other parameters passed onto methods.}
 
-\item{na_matches}{Should \code{NA} and \code{NaN} values match one another?
-
-The default, \code{"na"}, treats two \code{NA} or \code{NaN} values as equal, like \code{\%in\%}, \code{\link[=match]{match()}}, \code{\link[=merge]{merge()}}.
-
-Use \code{"never"} to always treat two \code{NA} or \code{NaN} values as different, like joins for database sources, similarly to
-\code{merge(incomparables = FALSE)}.}
+\item{na_matches}{Should NA (NULL) values match one another?
+The default, "never", is how databases usually work. \code{"na"} makes
+the joins behave like the dplyr join functions, \code{\link[=merge]{merge()}}, \code{\link[=match]{match()}},
+and \code{\%in\%}.}
 }
 \description{
 The \verb{CROSS JOIN} returns all combinations of \code{x} and \code{y}, i.e. the dataset which is the number of rows in the first
