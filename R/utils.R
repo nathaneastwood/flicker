@@ -18,3 +18,16 @@
 }
 
 simulate_vars <- "dbplyr" %:::% "simulate_vars"
+
+#' Lazy R Object Checks
+#'
+#' @export
+is.tbl_lazy <- function(x) {
+  inherits(x = x, what = "tbl_lazy")
+}
+
+#' @rdname is.tbl_lazy
+#' @export
+is.tbl_spark <- function(x) {
+  inherits(x = x, what = "tbl_spark")
+}
