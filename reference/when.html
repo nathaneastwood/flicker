@@ -82,7 +82,7 @@ If the condition evaluates to FALSE, these functions will return the original da
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">flicker</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@ If the condition evaluates to FALSE, these functions will return the original da
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -104,7 +104,7 @@ If the condition evaluates to FALSE, these functions will return the original da
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/nathaneastwood/flicker/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -214,75 +214,108 @@ If the condition evaluates to <code>FALSE</code>, these functions will return th
 #&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'><span class='co'># And if the condition if TRUE, it will evaluate</span>
 <span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mutate_when</span><span class='op'>(</span><span class='va'>previous_result</span> <span class='op'>&gt;=</span> <span class='fl'>42</span>, <span class='va'>mpg</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb mpg * 2
-#&gt; 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4    42.0
-#&gt; 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4    42.0
-#&gt; 3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1    45.6
-#&gt; 4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1    42.8
-#&gt; 5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2    37.4
-#&gt; 6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1    36.2
-#&gt; 7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4    28.6
-#&gt; 8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2    48.8
-#&gt; 9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2    45.6
-#&gt; 10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4    38.4
-#&gt; 11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4    35.6
-#&gt; 12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3    32.8
-#&gt; 13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3    34.6
-#&gt; 14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3    30.4
-#&gt; 15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4    20.8
-#&gt; 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4    20.8
-#&gt; 17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4    29.4
-#&gt; 18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1    64.8
-#&gt; 19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2    60.8
-#&gt; 20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1    67.8
-#&gt; 21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1    43.0
-#&gt; 22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    31.0
-#&gt; 23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2    30.4
-#&gt; 24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4    26.6
-#&gt; 25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    38.4
-#&gt; 26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1    54.6
-#&gt; 27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2    52.0
-#&gt; 28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2    60.8
-#&gt; 29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4    31.6
-#&gt; 30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6    39.4
-#&gt; 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8    30.0
-#&gt; 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2    42.8</div><div class='input'>
+</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb mpg * 2
+#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4    42.0
+#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4    42.0
+#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1    45.6
+#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1    42.8
+#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2    37.4
+#&gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1    36.2
+#&gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4    28.6
+#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2    48.8
+#&gt; Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2    45.6
+#&gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4    38.4
+#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4    35.6
+#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3    32.8
+#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3    34.6
+#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3    30.4
+#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4    20.8
+#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4    20.8
+#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4    29.4
+#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1    64.8
+#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2    60.8
+#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1    67.8
+#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1    43.0
+#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2    31.0
+#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2    30.4
+#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4    26.6
+#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2    38.4
+#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1    54.6
+#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2    52.0
+#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2    60.8
+#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4    31.6
+#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6    39.4
+#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8    30.0
+#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2    42.8</div><div class='input'>
 <span class='co'># We can evaluate multiple expressions</span>
 <span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mutate_when</span><span class='op'>(</span><span class='va'>previous_result</span> <span class='op'>&gt;=</span> <span class='fl'>42</span>, mpg2 <span class='op'>=</span> <span class='va'>mpg</span> <span class='op'>*</span> <span class='fl'>2</span>, mpg4 <span class='op'>=</span> <span class='va'>mpg</span> <span class='op'>*</span> <span class='fl'>2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     mpg cyl  disp  hp drat    wt  qsec vs am gear carb mpg2 mpg4
-#&gt; 1  21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 42.0 42.0
-#&gt; 2  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 42.0 42.0
-#&gt; 3  22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1 45.6 45.6
-#&gt; 4  21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 42.8 42.8
-#&gt; 5  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2 37.4 37.4
-#&gt; 6  18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 36.2 36.2
-#&gt; 7  14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4 28.6 28.6
-#&gt; 8  24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 48.8 48.8
-#&gt; 9  22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2 45.6 45.6
-#&gt; 10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 38.4 38.4
-#&gt; 11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 35.6 35.6
-#&gt; 12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3 32.8 32.8
-#&gt; 13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3 34.6 34.6
-#&gt; 14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3 30.4 30.4
-#&gt; 15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 20.8 20.8
-#&gt; 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 20.8 20.8
-#&gt; 17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4 29.4 29.4
-#&gt; 18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 64.8 64.8
-#&gt; 19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2 60.8 60.8
-#&gt; 20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1 67.8 67.8
-#&gt; 21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1 43.0 43.0
-#&gt; 22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2 31.0 31.0
-#&gt; 23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2 30.4 30.4
-#&gt; 24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4 26.6 26.6
-#&gt; 25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2 38.4 38.4
-#&gt; 26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 54.6 54.6
-#&gt; 27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 52.0 52.0
-#&gt; 28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 60.8 60.8
-#&gt; 29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4 31.6 31.6
-#&gt; 30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 39.4 39.4
-#&gt; 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8 30.0 30.0
-#&gt; 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 42.8 42.8</div><div class='input'>
+</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb mpg2
+#&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4 42.0
+#&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4 42.0
+#&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1 45.6
+#&gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1 42.8
+#&gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2 37.4
+#&gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1 36.2
+#&gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4 28.6
+#&gt; Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2 48.8
+#&gt; Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2 45.6
+#&gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4 38.4
+#&gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4 35.6
+#&gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3 32.8
+#&gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3 34.6
+#&gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3 30.4
+#&gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4 20.8
+#&gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4 20.8
+#&gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4 29.4
+#&gt; Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1 64.8
+#&gt; Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2 60.8
+#&gt; Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1 67.8
+#&gt; Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1 43.0
+#&gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2 31.0
+#&gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2 30.4
+#&gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4 26.6
+#&gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2 38.4
+#&gt; Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1 54.6
+#&gt; Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2 52.0
+#&gt; Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2 60.8
+#&gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4 31.6
+#&gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6 39.4
+#&gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8 30.0
+#&gt; Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 42.8
+#&gt;                     mpg4
+#&gt; Mazda RX4           42.0
+#&gt; Mazda RX4 Wag       42.0
+#&gt; Datsun 710          45.6
+#&gt; Hornet 4 Drive      42.8
+#&gt; Hornet Sportabout   37.4
+#&gt; Valiant             36.2
+#&gt; Duster 360          28.6
+#&gt; Merc 240D           48.8
+#&gt; Merc 230            45.6
+#&gt; Merc 280            38.4
+#&gt; Merc 280C           35.6
+#&gt; Merc 450SE          32.8
+#&gt; Merc 450SL          34.6
+#&gt; Merc 450SLC         30.4
+#&gt; Cadillac Fleetwood  20.8
+#&gt; Lincoln Continental 20.8
+#&gt; Chrysler Imperial   29.4
+#&gt; Fiat 128            64.8
+#&gt; Honda Civic         60.8
+#&gt; Toyota Corolla      67.8
+#&gt; Toyota Corona       43.0
+#&gt; Dodge Challenger    31.0
+#&gt; AMC Javelin         30.4
+#&gt; Camaro Z28          26.6
+#&gt; Pontiac Firebird    38.4
+#&gt; Fiat X1-9           54.6
+#&gt; Porsche 914-2       52.0
+#&gt; Lotus Europa        60.8
+#&gt; Ford Pantera L      31.6
+#&gt; Ferrari Dino        39.4
+#&gt; Maserati Bora       30.0
+#&gt; Volvo 142E          42.8</div><div class='input'>
 <span class='co'># We can still use functionality such as tidy-select</span>
 <span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
   <span class='fu'>select_when</span><span class='op'>(</span><span class='va'>previous_result</span> <span class='op'>&gt;=</span> <span class='fl'>42</span>, Cylinders <span class='op'>=</span> <span class='va'>cyl</span>, <span class='fu'>everything</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
