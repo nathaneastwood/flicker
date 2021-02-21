@@ -9,6 +9,12 @@ is.tbl_lazy(x)
 
 is.tbl_spark(x)
 }
+\arguments{
+\item{x}{Any R object.}
+}
+\value{
+A \code{logical(1)}.
+}
 \description{
 Lazy R Object Checks
 }
