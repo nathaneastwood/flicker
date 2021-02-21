@@ -91,7 +91,6 @@ expect_equal(
     res <- mtcars
     res[, "mpg2"] <- res$mpg * 2
     res[, "mpg4"] <- res$mpg * 4
-    rownames(res) <- NULL
     res
   },
   info = "Multiple expressions can be passed"
